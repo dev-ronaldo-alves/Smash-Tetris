@@ -76,8 +76,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: clamp(4px, 1.5vh, 10px);
-            padding: clamp(8px, 2vh, 16px);
+            gap: clamp(5px, 1.8vh, 12px);
+            padding: clamp(10px, 2.4vh, 20px);
             border: 2px solid #ff00ff;
             border-radius: 16px;
             box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
@@ -128,7 +128,7 @@
         #preload-content h1 {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(1.6rem, 6vw, 3rem);
+            font-size: clamp(1.8rem, 7vw, 3.6rem);
             text-align: center;
             color: #00ffff;
             text-shadow: 0 0 8px #00ffff, 0 0 16px #00ffff;
@@ -138,7 +138,7 @@
         }
 
         #preload-content .subtitle {
-            font-size: clamp(0.5rem, 1.5vw, 0.8rem);
+            font-size: clamp(0.6rem, 1.8vw, 1rem);
             color: #ff00ff;
             letter-spacing: 2px;
             text-shadow: 0 0 6px #ff00ff;
@@ -148,16 +148,16 @@
 
         #preload-loader {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             justify-content: center;
             align-items: center;
-            height: 24px;
+            height: 28px;
         }
 
         #preload-loader span {
             display: block;
-            width: 7px;
-            height: 7px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: #ff00ff;
             box-shadow: 0 0 6px #ff00ff;
@@ -177,8 +177,8 @@
         #start-btn {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
-            font-size: clamp(0.8rem, 2.2vw, 1.2rem);
-            padding: 10px 28px;
+            font-size: clamp(0.9rem, 2.6vw, 1.4rem);
+            padding: 12px 32px;
             border: 2px solid #00ffff;
             border-radius: 40px;
             background: rgba(0, 255, 255, 0.08);
@@ -200,7 +200,7 @@
         #title {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(1.2rem, 4vw, 2rem);
+            font-size: clamp(1.4rem, 5vw, 2.4rem);
             letter-spacing: 2px;
             text-align: center;
             color: #00ffff;
@@ -218,7 +218,7 @@
         /* ===== ÁREA DO JOGO (FLEX COMPACTO) ===== */
         #game-area {
             display: flex;
-            gap: clamp(6px, 1.5vw, 14px);
+            gap: clamp(8px, 2vw, 18px);
             flex-wrap: nowrap;
             justify-content: center;
             align-items: flex-start;
@@ -227,7 +227,7 @@
 
         /* ===== CANVAS PRINCIPAL ===== */
         #gameCanvas {
-            width: clamp(160px, 40vw, 260px);
+            width: clamp(180px, 45vw, 312px);
             height: auto;
             aspect-ratio: 300 / 600;
             border: 2px solid #00ffff;
@@ -245,13 +245,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: clamp(3px, 1vh, 8px);
-            min-width: clamp(60px, 15vw, 100px);
+            gap: clamp(4px, 1.2vh, 10px);
+            min-width: clamp(70px, 18vw, 120px);
             flex-shrink: 1;
         }
 
         #next-label {
-            font-size: clamp(0.4rem, 1.2vw, 0.6rem);
+            font-size: clamp(0.5rem, 1.5vw, 0.75rem);
             color: #ff00ff;
             letter-spacing: 1px;
             text-shadow: 0 0 4px #ff00ff;
@@ -260,7 +260,7 @@
 
         #nextCanvas {
             width: 100%;
-            max-width: clamp(60px, 15vw, 100px);
+            max-width: clamp(70px, 18vw, 120px);
             height: auto;
             aspect-ratio: 120 / 120;
             border: 2px solid #ff00ff;
@@ -276,7 +276,7 @@
             gap: 2px;
             width: 100%;
             color: #00ffaa;
-            font-size: clamp(0.4rem, 1.2vw, 0.6rem);
+            font-size: clamp(0.5rem, 1.4vw, 0.75rem);
             letter-spacing: 0.5px;
             text-shadow: 0 0 4px #00ffaa;
             text-align: center;
@@ -298,18 +298,18 @@
         /* ===== LOGO ABAIXO DE "LINHAS" ===== */
         #logo-placeholder {
             margin-top: 5px;
-            width: clamp(40px, 10vw, 60px);
+            width: clamp(45px, 12vw, 72px);
             height: auto;
             aspect-ratio: 1 / 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            pointer-events: none; /* não atrapalha cliques */
+            pointer-events: none;
         }
 
         #logo-placeholder img {
-            width: 200%;
-            height: 200%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
             display: block;
         }
@@ -317,18 +317,18 @@
         /* ===== CONTROLES (BOTÕES SETA) ===== */
         #controls {
             display: flex;
-            gap: clamp(12px, 4vw, 28px);
+            gap: clamp(14px, 5vw, 34px);
             margin-top: 2px;
         }
 
         .ctrl-btn {
-            width: clamp(40px, 10vw, 56px);
-            height: clamp(40px, 10vw, 56px);
+            width: clamp(48px, 12vw, 67px);
+            height: clamp(48px, 12vw, 67px);
             border-radius: 50%;
             border: 2px solid #00ffff;
             background: rgba(0, 255, 255, 0.08);
             color: #00ffff;
-            font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+            font-size: clamp(1.4rem, 4vw, 2.2rem);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -371,15 +371,15 @@
         #neon-strip {
             display: flex;
             justify-content: center;
-            gap: clamp(3px, 1vw, 6px);
+            gap: clamp(4px, 1.2vw, 8px);
             width: 100%;
-            padding: 3px 0 0;
+            padding: 4px 0 0;
             flex-wrap: wrap;
         }
 
         .strip-light {
-            width: clamp(5px, 1.5vw, 8px);
-            height: clamp(5px, 1.5vw, 8px);
+            width: clamp(6px, 1.8vw, 10px);
+            height: clamp(6px, 1.8vw, 10px);
             border-radius: 50%;
             background: #ff00ff;
             box-shadow: 0 0 6px #ff00ff;
@@ -414,17 +414,17 @@
 
         #game-over h2 {
             color: #ff0066;
-            font-size: clamp(1.4rem, 5vw, 2rem);
+            font-size: clamp(1.6rem, 6vw, 2.4rem);
             text-shadow: 0 0 12px #ff0066;
             letter-spacing: 2px;
         }
 
         #game-over p {
             color: #00ffff;
-            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            font-size: clamp(0.8rem, 2.4vw, 1.1rem);
             text-shadow: 0 0 6px #00ffff;
             cursor: pointer;
-            padding: 6px 16px;
+            padding: 8px 20px;
             border: 1px solid #00ffff;
             border-radius: 30px;
             transition: all 0.2s;
@@ -444,6 +444,57 @@
                 gap: 4px;
             }
             #sidebar {
+                min-width: 55px;
+            }
+            #nextCanvas {
+                max-width: 55px;
+            }
+            #info {
+                font-size: 0.45rem;
+            }
+            .ctrl-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+            #controls {
+                gap: 12px;
+            }
+            #title {
+                font-size: 1.1rem;
+            }
+            #preload-content h1 {
+                font-size: 1.6rem;
+            }
+            #start-btn {
+                padding: 6px 16px;
+                font-size: 0.75rem;
+            }
+            .strip-light {
+                width: 5px;
+                height: 5px;
+            }
+            #neon-strip {
+                gap: 3px;
+            }
+            #logo-placeholder {
+                width: 38px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            #game-container {
+                padding: 4px 6px 8px;
+                gap: 3px;
+            }
+            #title {
+                font-size: 1rem;
+                margin-bottom: -2px;
+            }
+            #game-area {
+                gap: 3px;
+            }
+            #sidebar {
                 min-width: 50px;
             }
             #nextCanvas {
@@ -460,90 +511,39 @@
             #controls {
                 gap: 10px;
             }
-            #title {
-                font-size: 1rem;
-            }
-            #preload-content h1 {
-                font-size: 1.4rem;
-            }
-            #start-btn {
-                padding: 6px 16px;
-                font-size: 0.7rem;
-            }
-            .strip-light {
-                width: 4px;
-                height: 4px;
-            }
-            #neon-strip {
-                gap: 2px;
-            }
-            #logo-placeholder {
-                width: 35px;
-            }
-        }
-
-        @media (max-height: 600px) {
-            #game-container {
-                padding: 4px 6px 8px;
-                gap: 3px;
-            }
-            #title {
-                font-size: 0.9rem;
-                margin-bottom: -2px;
-            }
-            #game-area {
-                gap: 3px;
-            }
-            #sidebar {
-                min-width: 45px;
-            }
-            #nextCanvas {
-                max-width: 45px;
-            }
-            #info {
-                font-size: 0.35rem;
-            }
-            .ctrl-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 0.9rem;
-            }
-            #controls {
-                gap: 8px;
-            }
             #neon-strip {
                 display: none;
             }
             #preload-content h1 {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
             #start-btn {
                 padding: 4px 12px;
-                font-size: 0.6rem;
+                font-size: 0.65rem;
             }
             #logo-placeholder {
-                width: 30px;
+                width: 32px;
                 margin-top: 3px;
             }
         }
 
         @media (max-width: 350px) {
             #gameCanvas {
-                width: 120px;
+                width: 140px;
             }
             #nextCanvas {
-                max-width: 40px;
+                max-width: 45px;
             }
             .ctrl-btn {
-                width: 28px;
-                height: 28px;
-                font-size: 0.7rem;
+                width: 32px;
+                height: 32px;
+                font-size: 0.8rem;
             }
             #info {
-                font-size: 0.3rem;
+                font-size: 0.35rem;
             }
             #logo-placeholder {
-                width: 25px;
+                width: 28px;
             }
         }
     </style>
@@ -1086,7 +1086,7 @@
             updateUI();
         })();
 
-        console.log('🍔 Smash Tetris - logo posicionada abaixo de LINHAS com margem de 5px!');
+        console.log('🍔 Smash Tetris - tamanho aumentado em 20%, tudo mais proporcional!');
     </script>
 
 </body>
