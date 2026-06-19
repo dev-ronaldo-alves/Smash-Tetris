@@ -76,8 +76,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: clamp(6px, 2.16vh, 14px);   /* +20% */
-            padding: clamp(12px, 2.88vh, 24px); /* +20% */
+            gap: clamp(6px, 2.16vh, 14px);
+            padding: clamp(12px, 2.88vh, 24px);
             border: 2px solid #ff00ff;
             border-radius: 16px;
             box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
@@ -128,7 +128,7 @@
         #preload-content h1 {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(2.16rem, 8.4vw, 4.32rem); /* +20% */
+            font-size: clamp(2.16rem, 8.4vw, 4.32rem);
             text-align: center;
             color: #00ffff;
             text-shadow: 0 0 8px #00ffff, 0 0 16px #00ffff;
@@ -138,7 +138,7 @@
         }
 
         #preload-content .subtitle {
-            font-size: clamp(0.72rem, 2.16vw, 1.2rem); /* +20% */
+            font-size: clamp(0.72rem, 2.16vw, 1.2rem);
             color: #ff00ff;
             letter-spacing: 2px;
             text-shadow: 0 0 6px #ff00ff;
@@ -177,7 +177,7 @@
         #start-btn {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
-            font-size: clamp(1.08rem, 3.12vw, 1.68rem); /* +20% */
+            font-size: clamp(1.08rem, 3.12vw, 1.68rem);
             padding: 12px 32px;
             border: 2px solid #00ffff;
             border-radius: 40px;
@@ -200,7 +200,7 @@
         #title {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(1.68rem, 6vw, 2.88rem); /* +20% */
+            font-size: clamp(1.68rem, 6vw, 2.88rem);
             letter-spacing: 2px;
             text-align: center;
             color: #00ffff;
@@ -218,7 +218,7 @@
         /* ===== ÁREA DO JOGO (FLEX COMPACTO) ===== */
         #game-area {
             display: flex;
-            gap: clamp(9.6px, 2.4vw, 21.6px); /* +20% */
+            gap: clamp(9.6px, 2.4vw, 21.6px);
             flex-wrap: nowrap;
             justify-content: center;
             align-items: flex-start;
@@ -227,7 +227,7 @@
 
         /* ===== CANVAS PRINCIPAL ===== */
         #gameCanvas {
-            width: clamp(216px, 54vw, 374px); /* +20% */
+            width: clamp(216px, 54vw, 374px);
             height: auto;
             aspect-ratio: 300 / 600;
             border: 2px solid #00ffff;
@@ -245,13 +245,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: clamp(4.8px, 1.44vh, 12px); /* +20% */
-            min-width: clamp(84px, 21.6vw, 144px); /* +20% */
+            gap: clamp(4.8px, 1.44vh, 12px);
+            min-width: clamp(84px, 21.6vw, 144px);
             flex-shrink: 1;
         }
 
         #next-label {
-            font-size: clamp(0.6rem, 1.8vw, 0.9rem); /* +20% */
+            font-size: clamp(0.6rem, 1.8vw, 0.9rem);
             color: #ff00ff;
             letter-spacing: 1px;
             text-shadow: 0 0 4px #ff00ff;
@@ -260,7 +260,7 @@
 
         #nextCanvas {
             width: 100%;
-            max-width: clamp(84px, 21.6vw, 144px); /* +20% */
+            max-width: clamp(84px, 21.6vw, 144px);
             height: auto;
             aspect-ratio: 120 / 120;
             border: 2px solid #ff00ff;
@@ -276,7 +276,7 @@
             gap: 2px;
             width: 100%;
             color: #00ffaa;
-            font-size: clamp(0.6rem, 1.68vw, 0.9rem); /* +20% */
+            font-size: clamp(0.6rem, 1.68vw, 0.9rem);
             letter-spacing: 0.5px;
             text-shadow: 0 0 4px #00ffaa;
             text-align: center;
@@ -295,16 +295,15 @@
             text-shadow: 0 0 4px #00ffff;
         }
 
-        /* ===== LOGO ABAIXO DE "LINHAS" ===== */
+        /* ===== LOGO E IFOOD ===== */
         #logo-placeholder {
             margin-top: 5px;
-            width: clamp(54px, 14.4vw, 86.4px); /* +20% */
+            width: clamp(54px, 14.4vw, 86.4px);
             height: auto;
             aspect-ratio: 1 / 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            pointer-events: none;
         }
 
         #logo-placeholder img {
@@ -314,21 +313,62 @@
             display: block;
         }
 
-        /* ===== CONTROLES (BOTÕES SETA) ===== */
-        #controls {
+        #ifood-link {
             display: flex;
-            gap: clamp(16.8px, 6vw, 40.8px); /* +20% */
-            margin-top: 2px;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            gap: 4px;
+            margin-top: 8px;
+            transition: transform 0.2s;
+        }
+        
+        #ifood-link:active {
+            transform: scale(0.9);
+        }
+
+        #ifood-icon {
+            width: clamp(40px, 10vw, 60px);
+            height: auto;
+            filter: drop-shadow(0 0 5px #ea1d2c);
+        }
+
+        #ifood-text {
+            color: #ea1d2c;
+            font-size: clamp(0.5rem, 1.4vw, 0.75rem);
+            font-weight: 900;
+            text-shadow: 0 0 3px rgba(234, 29, 44, 0.5);
+            text-transform: uppercase;
+        }
+
+        /* ===== CONTROLES (BOTÕES) ===== */
+        #controls-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        #controls-main {
+            display: flex;
+            gap: clamp(16.8px, 6vw, 40.8px);
+        }
+
+        #controls-secondary {
+            display: flex;
+            gap: 20px;
         }
 
         .ctrl-btn {
-            width: clamp(57.6px, 14.4vw, 80.4px); /* +20% */
-            height: clamp(57.6px, 14.4vw, 80.4px); /* +20% */
+            width: clamp(57.6px, 14.4vw, 80.4px);
+            height: clamp(57.6px, 14.4vw, 80.4px);
             border-radius: 50%;
             border: 2px solid #00ffff;
             background: rgba(0, 255, 255, 0.08);
             color: #00ffff;
-            font-size: clamp(1.68rem, 4.8vw, 2.64rem); /* +20% */
+            font-size: clamp(1.68rem, 4.8vw, 2.64rem);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -367,19 +407,39 @@
             background: rgba(0, 255, 170, 0.2);
         }
 
-        /* ===== FAIXA DE LUZES NEON (REDUZIDA) ===== */
+        .ctrl-btn#rotateBtn {
+            border-color: #ffcc00;
+            color: #ffcc00;
+            box-shadow: 0 0 8px rgba(255, 204, 0, 0.08);
+            text-shadow: 0 0 6px #ffcc00;
+        }
+        .ctrl-btn#rotateBtn:active {
+            background: rgba(255, 204, 0, 0.2);
+        }
+
+        .ctrl-btn#downBtn {
+            border-color: #ff6600;
+            color: #ff6600;
+            box-shadow: 0 0 8px rgba(255, 102, 0, 0.08);
+            text-shadow: 0 0 6px #ff6600;
+        }
+        .ctrl-btn#downBtn:active {
+            background: rgba(255, 102, 0, 0.2);
+        }
+
+        /* ===== FAIXA DE LUZES NEON ===== */
         #neon-strip {
             display: flex;
             justify-content: center;
-            gap: clamp(4.8px, 1.44vw, 9.6px); /* +20% */
+            gap: clamp(4.8px, 1.44vw, 9.6px);
             width: 100%;
             padding: 4px 0 0;
             flex-wrap: wrap;
         }
 
         .strip-light {
-            width: clamp(7.2px, 2.16vw, 12px); /* +20% */
-            height: clamp(7.2px, 2.16vw, 12px); /* +20% */
+            width: clamp(7.2px, 2.16vw, 12px);
+            height: clamp(7.2px, 2.16vw, 12px);
             border-radius: 50%;
             background: #ff00ff;
             box-shadow: 0 0 6px #ff00ff;
@@ -414,14 +474,14 @@
 
         #game-over h2 {
             color: #ff0066;
-            font-size: clamp(1.92rem, 7.2vw, 2.88rem); /* +20% */
+            font-size: clamp(1.92rem, 7.2vw, 2.88rem);
             text-shadow: 0 0 12px #ff0066;
             letter-spacing: 2px;
         }
 
         #game-over p {
             color: #00ffff;
-            font-size: clamp(0.96rem, 2.88vw, 1.32rem); /* +20% */
+            font-size: clamp(0.96rem, 2.88vw, 1.32rem);
             text-shadow: 0 0 6px #00ffff;
             cursor: pointer;
             padding: 8px 20px;
@@ -433,10 +493,10 @@
             background: rgba(0, 255, 255, 0.2);
         }
 
-        /* ===== RESPONSIVO EXTREMO ===== */
+        /* ===== RESPONSIVO ===== */
         @media (max-width: 400px) {
             #game-container {
-                padding: 7.2px 9.6px 12px; /* +20% */
+                padding: 7.2px 9.6px 12px;
                 gap: 4.8px;
                 border-radius: 12px;
             }
@@ -457,8 +517,11 @@
                 height: 48px;
                 font-size: 1.32rem;
             }
-            #controls {
+            #controls-main {
                 gap: 14.4px;
+            }
+            #controls-secondary {
+                gap: 10px;
             }
             #title {
                 font-size: 1.32rem;
@@ -469,81 +532,6 @@
             #start-btn {
                 padding: 7.2px 19.2px;
                 font-size: 0.9rem;
-            }
-            .strip-light {
-                width: 6px;
-                height: 6px;
-            }
-            #neon-strip {
-                gap: 3.6px;
-            }
-            #logo-placeholder {
-                width: 45.6px;
-            }
-        }
-
-        @media (max-height: 600px) {
-            #game-container {
-                padding: 4.8px 7.2px 9.6px;
-                gap: 3.6px;
-            }
-            #title {
-                font-size: 1.2rem;
-                margin-bottom: -2px;
-            }
-            #game-area {
-                gap: 3.6px;
-            }
-            #sidebar {
-                min-width: 60px;
-            }
-            #nextCanvas {
-                max-width: 60px;
-            }
-            #info {
-                font-size: 0.48rem;
-            }
-            .ctrl-btn {
-                width: 43.2px;
-                height: 43.2px;
-                font-size: 1.2rem;
-            }
-            #controls {
-                gap: 12px;
-            }
-            #neon-strip {
-                display: none;
-            }
-            #preload-content h1 {
-                font-size: 1.56rem;
-            }
-            #start-btn {
-                padding: 4.8px 14.4px;
-                font-size: 0.78rem;
-            }
-            #logo-placeholder {
-                width: 38.4px;
-                margin-top: 3px;
-            }
-        }
-
-        @media (max-width: 350px) {
-            #gameCanvas {
-                width: 168px;
-            }
-            #nextCanvas {
-                max-width: 54px;
-            }
-            .ctrl-btn {
-                width: 38.4px;
-                height: 38.4px;
-                font-size: 0.96rem;
-            }
-            #info {
-                font-size: 0.42rem;
-            }
-            #logo-placeholder {
-                width: 33.6px;
             }
         }
     </style>
@@ -581,16 +569,27 @@
                     <div>NÍVEL <span id="level">1</span></div>
                     <div>LINHAS <span id="lines">0</span></div>
                 </div>
-                <!-- LOGO ABAIXO DE "LINHAS" COM MARGEM DE 5px -->
+                <!-- LOGO -->
                 <div id="logo-placeholder">
                     <img src="logo-transparente.png" alt="Logo">
                 </div>
+                <!-- IFOOD -->
+                <a id="ifood-link" href="https://www.ifood.com.br/delivery/maringa-pr/smash-it-hamburgueria-zona-04/e3e950c2-2edc-46a7-9907-2c78989cc446" target="_blank">
+                    <img id="ifood-icon" src="https://logodownload.org/wp-content/uploads/2017/05/ifood-logo-0.png" alt="iFood">
+                    <span id="ifood-text">Pedir no iFood</span>
+                </a>
             </div>
         </div>
 
-        <div id="controls">
-            <button class="ctrl-btn" id="leftBtn">◀</button>
-            <button class="ctrl-btn" id="rightBtn">▶</button>
+        <div id="controls-wrapper">
+            <div id="controls-main">
+                <button class="ctrl-btn" id="leftBtn">◀</button>
+                <button class="ctrl-btn" id="rightBtn">▶</button>
+            </div>
+            <div id="controls-secondary">
+                <button class="ctrl-btn" id="rotateBtn">↻</button>
+                <button class="ctrl-btn" id="downBtn">▼</button>
+            </div>
         </div>
 
         <!-- FAIXA DE LUZES NEON INFERIOR -->
@@ -650,7 +649,7 @@
         })();
 
         // ============================================================
-        //  3.  TETRIS – LÓGICA COMPLETA (OTIMIZADA)
+        //  3.  TETRIS – LÓGICA COMPLETA
         // ============================================================
 
         const canvas = document.getElementById('gameCanvas');
@@ -741,7 +740,7 @@
                     if (shape[r][c] !== 0) {
                         const gridX = posX + c;
                         const gridY = posY + r;
-                        if (gridX < 0 || gridX >= COLS || gridY >= ROWS || gridY < 0) return true;
+                        if (gridX < 0 || gridX >= COLS || gridY >= ROWS) return true;
                         if (gridY >= 0 && grid[gridY][gridX] !== 0) return true;
                     }
                 }
@@ -839,6 +838,7 @@
             if (!currentPiece || gameOver) return;
             if (!collides(currentPiece.shape, currentPiece.x, currentPiece.y + 1)) {
                 currentPiece.y++;
+                lastDropTime = performance.now();
             } else {
                 lockPiece();
             }
@@ -850,7 +850,6 @@
             linesSpan.textContent = linesCleared;
         }
 
-        // Desenho simplificado
         function drawBlock(context, x, y, colorIndex, size, isNext = false) {
             const color = COLORS[colorIndex];
             context.fillStyle = color;
@@ -990,7 +989,7 @@
             }
         });
 
-        // ===== Toque =====
+        // ===== Toque no Canvas =====
         canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameOver) return;
@@ -1029,33 +1028,37 @@
             }
         }, { passive: false });
 
-        canvas.addEventListener('touchcancel', () => {
-            if (touchTimer) { clearTimeout(touchTimer); touchTimer = null; }
-        }, { passive: false });
-
-        // ===== Botões =====
-        function setupButton(id, action) {
+        // ===== Botões de Controle =====
+        function setupButton(id, action, repeat = true) {
             const btn = document.getElementById(id);
             if (!btn) return;
             let repeatInterval = null;
-            const startRepeat = (e) => {
+            
+            const startAction = (e) => {
                 e.preventDefault();
                 if (gameOver) return;
                 action();
-                repeatInterval = setInterval(() => { if (!gameOver) action(); }, 120);
+                if (repeat) {
+                    repeatInterval = setInterval(() => { if (!gameOver) action(); }, 120);
+                }
             };
-            const stopRepeat = () => {
+            
+            const stopAction = () => {
                 if (repeatInterval) { clearInterval(repeatInterval); repeatInterval = null; }
             };
-            btn.addEventListener('mousedown', startRepeat);
-            btn.addEventListener('mouseup', stopRepeat);
-            btn.addEventListener('mouseleave', stopRepeat);
-            btn.addEventListener('touchstart', startRepeat, { passive: false });
-            btn.addEventListener('touchend', stopRepeat, { passive: false });
-            btn.addEventListener('touchcancel', stopRepeat);
+            
+            btn.addEventListener('mousedown', startAction);
+            btn.addEventListener('mouseup', stopAction);
+            btn.addEventListener('mouseleave', stopAction);
+            btn.addEventListener('touchstart', startAction, { passive: false });
+            btn.addEventListener('touchend', stopAction, { passive: false });
+            btn.addEventListener('touchcancel', stopAction);
         }
+        
         setupButton('leftBtn', moveLeft);
         setupButton('rightBtn', moveRight);
+        setupButton('rotateBtn', rotatePiece, false); // Rotação geralmente não repete
+        setupButton('downBtn', moveDown);
 
         // ===== Reiniciar =====
         restartBtn.addEventListener('click', initGame);
@@ -1086,7 +1089,7 @@
             updateUI();
         })();
 
-        console.log('🍔 Smash Tetris - tamanho aumentado em 20%!');
+        console.log('🍔 Smash Tetris - iFood & Controles adicionados!');
     </script>
 
 </body>
