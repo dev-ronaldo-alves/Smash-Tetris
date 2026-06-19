@@ -24,9 +24,14 @@
             font-family: 'Orbitron', sans-serif;
             overflow: hidden;
             touch-action: none;
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
         }
 
-        /* ===== LUZES NEON DE FUNDO (MENOS ELEMENTOS E MAIS LEVES) ===== */
+        /* ===== LUZES NEON DE FUNDO (LEVES) ===== */
         #background-lights {
             position: fixed;
             top: 0;
@@ -41,8 +46,8 @@
         .neon-light {
             position: absolute;
             border-radius: 50%;
-            opacity: 0.3;
-            filter: blur(15px);
+            opacity: 0.25;
+            filter: blur(12px);
             animation: neonPulse var(--duration) ease-in-out infinite alternate;
             animation-delay: var(--delay);
             width: var(--size);
@@ -50,16 +55,16 @@
             left: var(--x);
             top: var(--y);
             background: var(--color);
-            box-shadow: 0 0 20px var(--color);
+            box-shadow: 0 0 15px var(--color);
         }
 
         @keyframes neonPulse {
             0% {
-                opacity: 0.1;
+                opacity: 0.08;
                 transform: scale(0.8);
             }
             100% {
-                opacity: 0.4;
+                opacity: 0.35;
                 transform: scale(1.2);
             }
         }
@@ -71,17 +76,20 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-            padding: 14px 16px 16px;
+            gap: clamp(4px, 1.5vh, 10px);
+            padding: clamp(8px, 2vh, 16px);
             border: 2px solid #ff00ff;
-            border-radius: 20px;
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
-            background: rgba(10, 10, 10, 0.85);
+            border-radius: 16px;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
+            background: rgba(10, 10, 10, 0.88);
             backdrop-filter: blur(2px);
-            max-width: 95vw;
+            max-width: 98vw;
+            max-height: 98vh;
+            width: fit-content;
+            height: fit-content;
         }
 
-        /* ===== PRÉ-CARREGAMENTO (PRELOAD) ===== */
+        /* ===== PRÉ-CARREGAMENTO ===== */
         #preload-screen {
             position: absolute;
             top: 0;
@@ -89,18 +97,18 @@
             width: 100%;
             height: 100%;
             background: rgba(2, 2, 10, 0.92);
-            backdrop-filter: blur(4px);
-            border-radius: 18px;
+            backdrop-filter: blur(3px);
+            border-radius: 14px;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             z-index: 20;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
             opacity: 1;
             visibility: visible;
-            padding: 20px;
-            gap: 16px;
+            padding: 16px;
+            gap: 12px;
         }
 
         #preload-screen.hidden {
@@ -113,92 +121,72 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 18px;
+            gap: 14px;
             max-width: 90%;
         }
 
         #preload-content h1 {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(2rem, 7vw, 3.6rem);
+            font-size: clamp(1.6rem, 6vw, 3rem);
             text-align: center;
             color: #00ffff;
             text-shadow: 0 0 8px #00ffff, 0 0 16px #00ffff;
             animation: titleGlow 2s ease-in-out infinite alternate;
-            letter-spacing: 4px;
-            line-height: 1.2;
+            letter-spacing: 3px;
+            line-height: 1.1;
         }
 
         #preload-content .subtitle {
-            font-size: clamp(0.6rem, 1.8vw, 0.9rem);
+            font-size: clamp(0.5rem, 1.5vw, 0.8rem);
             color: #ff00ff;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-shadow: 0 0 6px #ff00ff;
             opacity: 0.7;
-            margin-top: -6px;
+            margin-top: -4px;
         }
 
-        /* Loader de barras neon (mais leve) */
         #preload-loader {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             justify-content: center;
             align-items: center;
-            height: 30px;
+            height: 24px;
         }
 
         #preload-loader span {
             display: block;
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             background: #ff00ff;
-            box-shadow: 0 0 8px #ff00ff;
+            box-shadow: 0 0 6px #ff00ff;
             animation: loaderPulse 1.4s ease-in-out infinite alternate;
         }
 
-        #preload-loader span:nth-child(1) {
-            animation-delay: 0s;
-            background: #ff00ff;
-        }
-        #preload-loader span:nth-child(2) {
-            animation-delay: 0.2s;
-            background: #00ffff;
-        }
-        #preload-loader span:nth-child(3) {
-            animation-delay: 0.4s;
-            background: #ff00cc;
-        }
-        #preload-loader span:nth-child(4) {
-            animation-delay: 0.6s;
-            background: #00ffaa;
-        }
+        #preload-loader span:nth-child(1) { animation-delay: 0s; background: #ff00ff; }
+        #preload-loader span:nth-child(2) { animation-delay: 0.2s; background: #00ffff; }
+        #preload-loader span:nth-child(3) { animation-delay: 0.4s; background: #ff00cc; }
+        #preload-loader span:nth-child(4) { animation-delay: 0.6s; background: #00ffaa; }
 
         @keyframes loaderPulse {
-            0% {
-                opacity: 0.2;
-                transform: scale(0.6);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1.2);
-            }
+            0% { opacity: 0.2; transform: scale(0.6); }
+            100% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* Botão JOGAR */
         #start-btn {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
-            font-size: clamp(0.9rem, 2.5vw, 1.4rem);
-            padding: 12px 32px;
+            font-size: clamp(0.8rem, 2.2vw, 1.2rem);
+            padding: 10px 28px;
             border: 2px solid #00ffff;
             border-radius: 40px;
             background: rgba(0, 255, 255, 0.08);
             color: #00ffff;
             text-shadow: 0 0 8px #00ffff;
-            box-shadow: 0 0 12px rgba(0, 255, 255, 0.15);
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.12);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
             letter-spacing: 2px;
             touch-action: manipulation;
         }
@@ -208,52 +196,48 @@
             background: rgba(0, 255, 255, 0.2);
         }
 
-        /* ===== TÍTULO DO JOGO ===== */
+        /* ===== TÍTULO ===== */
         #title {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(1.4rem, 5vw, 2.4rem);
-            letter-spacing: 3px;
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            letter-spacing: 2px;
             text-align: center;
             color: #00ffff;
-            text-shadow: 0 0 8px #00ffff, 0 0 16px #ff00ff;
+            text-shadow: 0 0 6px #00ffff, 0 0 12px #ff00ff;
             animation: titleGlow 2s ease-in-out infinite alternate;
-            padding: 0 4px;
+            padding: 0 2px;
+            line-height: 1.2;
         }
 
         @keyframes titleGlow {
-            0% {
-                text-shadow: 0 0 8px #00ffff, 0 0 16px #ff00ff;
-                color: #00ffff;
-            }
-            100% {
-                text-shadow: 0 0 12px #ff00ff, 0 0 24px #ff00ff;
-                color: #ff00ff;
-            }
+            0% { text-shadow: 0 0 6px #00ffff, 0 0 12px #ff00ff; color: #00ffff; }
+            100% { text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; color: #ff00ff; }
         }
 
-        /* ===== ÁREA DO JOGO ===== */
+        /* ===== ÁREA DO JOGO (FLEX COMPACTO) ===== */
         #game-area {
             display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
+            gap: clamp(6px, 1.5vw, 14px);
+            flex-wrap: nowrap;
             justify-content: center;
             align-items: flex-start;
+            width: 100%;
         }
 
         /* ===== CANVAS PRINCIPAL ===== */
         #gameCanvas {
-            width: 100%;
-            max-width: 280px;
+            width: clamp(160px, 40vw, 260px);
             height: auto;
             aspect-ratio: 300 / 600;
             border: 2px solid #00ffff;
-            border-radius: 8px;
-            box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.15);
             background: #0d0d0d;
             touch-action: none;
             cursor: pointer;
             image-rendering: pixelated;
+            flex-shrink: 0;
         }
 
         /* ===== SIDEBAR ===== */
@@ -261,25 +245,27 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            min-width: 100px;
+            gap: clamp(3px, 1vh, 8px);
+            min-width: clamp(60px, 15vw, 100px);
+            flex-shrink: 1;
         }
 
         #next-label {
-            font-size: 0.6rem;
+            font-size: clamp(0.4rem, 1.2vw, 0.6rem);
             color: #ff00ff;
-            letter-spacing: 2px;
-            text-shadow: 0 0 6px #ff00ff;
+            letter-spacing: 1px;
+            text-shadow: 0 0 4px #ff00ff;
+            white-space: nowrap;
         }
 
         #nextCanvas {
             width: 100%;
-            max-width: 100px;
+            max-width: clamp(60px, 15vw, 100px);
             height: auto;
             aspect-ratio: 120 / 120;
             border: 2px solid #ff00ff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(255, 0, 255, 0.15);
+            border-radius: 6px;
+            box-shadow: 0 0 8px rgba(255, 0, 255, 0.12);
             background: #0d0d0d;
             image-rendering: pixelated;
         }
@@ -287,11 +273,11 @@
         #info {
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 2px;
             width: 100%;
             color: #00ffaa;
-            font-size: 0.6rem;
-            letter-spacing: 1px;
+            font-size: clamp(0.4rem, 1.2vw, 0.6rem);
+            letter-spacing: 0.5px;
             text-shadow: 0 0 4px #00ffaa;
             text-align: center;
         }
@@ -299,53 +285,73 @@
         #info div {
             display: flex;
             justify-content: space-between;
-            padding: 2px 4px;
-            border-bottom: 1px solid rgba(0, 255, 170, 0.1);
+            padding: 1px 3px;
+            border-bottom: 1px solid rgba(0, 255, 170, 0.08);
         }
 
         #info span {
             color: #ffffff;
             font-weight: 700;
-            text-shadow: 0 0 6px #00ffff;
+            text-shadow: 0 0 4px #00ffff;
+        }
+
+        /* ===== LOGO ABAIXO DE "LINHAS" ===== */
+        #logo-placeholder {
+            margin-top: 5px;
+            width: clamp(40px, 10vw, 60px);
+            height: auto;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none; /* não atrapalha cliques */
+        }
+
+        #logo-placeholder img {
+            width: 200%;
+            height: 200%;
+            object-fit: contain;
+            display: block;
         }
 
         /* ===== CONTROLES (BOTÕES SETA) ===== */
         #controls {
             display: flex;
-            gap: 24px;
+            gap: clamp(12px, 4vw, 28px);
             margin-top: 2px;
         }
 
         .ctrl-btn {
-            width: 56px;
-            height: 56px;
+            width: clamp(40px, 10vw, 56px);
+            height: clamp(40px, 10vw, 56px);
             border-radius: 50%;
             border: 2px solid #00ffff;
             background: rgba(0, 255, 255, 0.08);
             color: #00ffff;
-            font-size: 1.8rem;
+            font-size: clamp(1.2rem, 3.5vw, 1.8rem);
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             touch-action: manipulation;
-            transition: all 0.1s;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
-            text-shadow: 0 0 8px #00ffff;
+            transition: all 0.08s;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.08);
+            text-shadow: 0 0 6px #00ffff;
             font-weight: 900;
             will-change: transform;
+            flex-shrink: 0;
         }
 
         .ctrl-btn:active {
-            transform: scale(0.92);
+            transform: scale(0.90);
             background: rgba(0, 255, 255, 0.2);
         }
 
         .ctrl-btn#leftBtn {
             border-color: #ff00ff;
             color: #ff00ff;
-            box-shadow: 0 0 10px rgba(255, 0, 255, 0.1);
-            text-shadow: 0 0 8px #ff00ff;
+            box-shadow: 0 0 8px rgba(255, 0, 255, 0.08);
+            text-shadow: 0 0 6px #ff00ff;
         }
         .ctrl-btn#leftBtn:active {
             background: rgba(255, 0, 255, 0.2);
@@ -354,56 +360,50 @@
         .ctrl-btn#rightBtn {
             border-color: #00ffaa;
             color: #00ffaa;
-            box-shadow: 0 0 10px rgba(0, 255, 170, 0.1);
-            text-shadow: 0 0 8px #00ffaa;
+            box-shadow: 0 0 8px rgba(0, 255, 170, 0.08);
+            text-shadow: 0 0 6px #00ffaa;
         }
         .ctrl-btn#rightBtn:active {
             background: rgba(0, 255, 170, 0.2);
         }
 
-        /* ===== FAIXA DE LUZES NEON (PAINEL INFERIOR) - MENOS ELEMENTOS ===== */
+        /* ===== FAIXA DE LUZES NEON (REDUZIDA) ===== */
         #neon-strip {
             display: flex;
             justify-content: center;
-            gap: 5px;
+            gap: clamp(3px, 1vw, 6px);
             width: 100%;
-            padding: 4px 0 0;
+            padding: 3px 0 0;
             flex-wrap: wrap;
         }
 
         .strip-light {
-            width: 8px;
-            height: 8px;
+            width: clamp(5px, 1.5vw, 8px);
+            height: clamp(5px, 1.5vw, 8px);
             border-radius: 50%;
             background: #ff00ff;
-            box-shadow: 0 0 8px #ff00ff;
+            box-shadow: 0 0 6px #ff00ff;
             animation: stripPulse 1.2s ease-in-out infinite alternate;
             animation-delay: var(--delay);
-            opacity: 0.5;
+            opacity: 0.4;
         }
 
         @keyframes stripPulse {
-            0% {
-                opacity: 0.2;
-                transform: scale(0.7);
-            }
-            100% {
-                opacity: 0.9;
-                transform: scale(1.1);
-            }
+            0% { opacity: 0.15; transform: scale(0.7); }
+            100% { opacity: 0.8; transform: scale(1.1); }
         }
 
-        /* ===== GAME OVER OVERLAY ===== */
+        /* ===== GAME OVER ===== */
         #game-over {
             display: none;
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, 0.8);
-            border-radius: 18px;
+            border-radius: 14px;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             backdrop-filter: blur(3px);
             z-index: 10;
         }
@@ -414,95 +414,136 @@
 
         #game-over h2 {
             color: #ff0066;
-            font-size: 1.8rem;
-            text-shadow: 0 0 16px #ff0066;
-            letter-spacing: 3px;
+            font-size: clamp(1.4rem, 5vw, 2rem);
+            text-shadow: 0 0 12px #ff0066;
+            letter-spacing: 2px;
         }
 
         #game-over p {
             color: #00ffff;
-            font-size: 0.8rem;
-            text-shadow: 0 0 8px #00ffff;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            text-shadow: 0 0 6px #00ffff;
             cursor: pointer;
-            padding: 8px 18px;
+            padding: 6px 16px;
             border: 1px solid #00ffff;
             border-radius: 30px;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
         #game-over p:active {
             background: rgba(0, 255, 255, 0.2);
         }
 
-        /* ===== RESPONSIVO ===== */
-        @media (max-width: 480px) {
+        /* ===== RESPONSIVO EXTREMO ===== */
+        @media (max-width: 400px) {
             #game-container {
-                padding: 8px 10px 12px;
-                gap: 6px;
+                padding: 6px 8px 10px;
+                gap: 4px;
+                border-radius: 12px;
             }
             #game-area {
-                gap: 8px;
-            }
-            #sidebar {
-                min-width: 70px;
                 gap: 4px;
             }
-            .ctrl-btn {
-                width: 48px;
-                height: 48px;
-                font-size: 1.4rem;
+            #sidebar {
+                min-width: 50px;
             }
-            #controls {
-                gap: 16px;
+            #nextCanvas {
+                max-width: 50px;
             }
             #info {
-                font-size: 0.5rem;
+                font-size: 0.4rem;
             }
-            #next-label {
-                font-size: 0.5rem;
+            .ctrl-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
             }
-            .strip-light {
-                width: 6px;
-                height: 6px;
+            #controls {
+                gap: 10px;
             }
-            #neon-strip {
-                gap: 3px;
+            #title {
+                font-size: 1rem;
             }
             #preload-content h1 {
-                font-size: clamp(1.6rem, 8vw, 2.4rem);
-            }
-            #preload-loader {
-                gap: 6px;
-                height: 24px;
-            }
-            #preload-loader span {
-                width: 6px;
-                height: 6px;
+                font-size: 1.4rem;
             }
             #start-btn {
-                padding: 8px 20px;
-                font-size: 0.8rem;
+                padding: 6px 16px;
+                font-size: 0.7rem;
+            }
+            .strip-light {
+                width: 4px;
+                height: 4px;
+            }
+            #neon-strip {
+                gap: 2px;
+            }
+            #logo-placeholder {
+                width: 35px;
             }
         }
 
-        @media (max-width: 380px) {
+        @media (max-height: 600px) {
+            #game-container {
+                padding: 4px 6px 8px;
+                gap: 3px;
+            }
+            #title {
+                font-size: 0.9rem;
+                margin-bottom: -2px;
+            }
             #game-area {
-                flex-direction: column;
-                align-items: center;
+                gap: 3px;
             }
             #sidebar {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                min-width: unset;
-                width: 100%;
+                min-width: 45px;
             }
             #nextCanvas {
-                max-width: 70px;
+                max-width: 45px;
+            }
+            #info {
+                font-size: 0.35rem;
             }
             .ctrl-btn {
-                width: 40px;
-                height: 40px;
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+            #controls {
+                gap: 8px;
+            }
+            #neon-strip {
+                display: none;
+            }
+            #preload-content h1 {
                 font-size: 1.2rem;
+            }
+            #start-btn {
+                padding: 4px 12px;
+                font-size: 0.6rem;
+            }
+            #logo-placeholder {
+                width: 30px;
+                margin-top: 3px;
+            }
+        }
+
+        @media (max-width: 350px) {
+            #gameCanvas {
+                width: 120px;
+            }
+            #nextCanvas {
+                max-width: 40px;
+            }
+            .ctrl-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 0.7rem;
+            }
+            #info {
+                font-size: 0.3rem;
+            }
+            #logo-placeholder {
+                width: 25px;
             }
         }
     </style>
@@ -540,6 +581,10 @@
                     <div>NÍVEL <span id="level">1</span></div>
                     <div>LINHAS <span id="lines">0</span></div>
                 </div>
+                <!-- LOGO ABAIXO DE "LINHAS" COM MARGEM DE 5px -->
+                <div id="logo-placeholder">
+                    <img src="logo-transparente.png" alt="Logo">
+                </div>
             </div>
         </div>
 
@@ -548,7 +593,7 @@
             <button class="ctrl-btn" id="rightBtn">▶</button>
         </div>
 
-        <!-- FAIXA DE LUZES NEON INFERIOR (MENOS ELEMENTOS) -->
+        <!-- FAIXA DE LUZES NEON INFERIOR -->
         <div id="neon-strip"></div>
 
         <!-- Game Over -->
@@ -560,19 +605,16 @@
 
     <script>
         // ============================================================
-        //  1.  LUZES NEON DE FUNDO (REDUZIDAS)
+        //  1.  LUZES NEON DE FUNDO (LEVES)
         // ============================================================
         (function createLights() {
             const container = document.getElementById('background-lights');
-            const neonColors = [
-                '#ff00ff', '#00ffff', '#ff00cc', '#00ffaa',
-                '#ff6600', '#9900ff', '#ff0066', '#ffcc00'
-            ];
-            const count = 20; // reduzido de 40 para 20
+            const neonColors = ['#ff00ff','#00ffff','#ff00cc','#00ffaa','#ff6600','#9900ff','#ff0066','#ffcc00'];
+            const count = 15;
             for (let i = 0; i < count; i++) {
                 const el = document.createElement('div');
                 el.className = 'neon-light';
-                const size = 30 + Math.random() * 100;
+                const size = 20 + Math.random() * 80;
                 const x = Math.random() * 100;
                 const y = Math.random() * 100;
                 const color = neonColors[Math.floor(Math.random() * neonColors.length)];
@@ -584,25 +626,25 @@
                 el.style.setProperty('--color', color);
                 el.style.setProperty('--duration', duration + 's');
                 el.style.setProperty('--delay', delay + 's');
-                el.style.filter = `blur(${12 + Math.random() * 20}px)`;
+                el.style.filter = `blur(${10 + Math.random() * 15}px)`;
                 container.appendChild(el);
             }
         })();
 
         // ============================================================
-        //  2.  FAIXA DE LUZES NEON (PAINEL INFERIOR) - REDUZIDA
+        //  2.  FAIXA DE LUZES NEON (PAINEL INFERIOR)
         // ============================================================
         (function createStrip() {
             const strip = document.getElementById('neon-strip');
-            const colors = ['#ff00ff', '#00ffff', '#ff00cc', '#00ffaa', '#ff6600', '#9900ff', '#ff0066', '#ffcc00'];
-            const count = 10; // reduzido de 16 para 10
+            const colors = ['#ff00ff','#00ffff','#ff00cc','#00ffaa','#ff6600','#9900ff','#ff0066','#ffcc00'];
+            const count = 8;
             for (let i = 0; i < count; i++) {
                 const light = document.createElement('div');
                 light.className = 'strip-light';
                 const color = colors[i % colors.length];
                 light.style.setProperty('--delay', (i * 0.15) + 's');
                 light.style.background = color;
-                light.style.boxShadow = `0 0 6px ${color}`;
+                light.style.boxShadow = `0 0 5px ${color}`;
                 strip.appendChild(light);
             }
         })();
@@ -611,13 +653,11 @@
         //  3.  TETRIS – LÓGICA COMPLETA (OTIMIZADA)
         // ============================================================
 
-        // --- Canvas ---
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const nextCanvas = document.getElementById('nextCanvas');
         const nextCtx = nextCanvas.getContext('2d');
 
-        // --- Elementos UI ---
         const scoreSpan = document.getElementById('score');
         const levelSpan = document.getElementById('level');
         const linesSpan = document.getElementById('lines');
@@ -626,60 +666,24 @@
         const preloadScreen = document.getElementById('preload-screen');
         const startBtn = document.getElementById('start-btn');
 
-        // --- Constantes ---
         const COLS = 10;
         const ROWS = 20;
         const BLOCK_SIZE = 30;
         const NEXT_SIZE = 30;
 
-        // Cores neon (mais simples)
-        const COLORS = [
-            null,
-            '#ff00ff', '#00ffff', '#ff00cc', '#00ffaa',
-            '#ff6600', '#9900ff', '#ff0066'
-        ];
+        const COLORS = [null, '#ff00ff','#00ffff','#ff00cc','#00ffaa','#ff6600','#9900ff','#ff0066'];
 
-        // --- Definição das peças ---
         const PIECES = {
-            I: { shape: [
-                    [0, 0, 0, 0],
-                    [1, 1, 1, 1],
-                    [0, 0, 0, 0],
-                    [0, 0, 0, 0]
-                ], color: 1 },
-            O: { shape: [
-                    [1, 1],
-                    [1, 1]
-                ], color: 2 },
-            T: { shape: [
-                    [0, 1, 0],
-                    [1, 1, 1],
-                    [0, 0, 0]
-                ], color: 3 },
-            S: { shape: [
-                    [0, 1, 1],
-                    [1, 1, 0],
-                    [0, 0, 0]
-                ], color: 4 },
-            Z: { shape: [
-                    [1, 1, 0],
-                    [0, 1, 1],
-                    [0, 0, 0]
-                ], color: 5 },
-            L: { shape: [
-                    [1, 0, 0],
-                    [1, 1, 1],
-                    [0, 0, 0]
-                ], color: 6 },
-            J: { shape: [
-                    [0, 0, 1],
-                    [1, 1, 1],
-                    [0, 0, 0]
-                ], color: 7 },
+            I: { shape: [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], color: 1 },
+            O: { shape: [[1,1],[1,1]], color: 2 },
+            T: { shape: [[0,1,0],[1,1,1],[0,0,0]], color: 3 },
+            S: { shape: [[0,1,1],[1,1,0],[0,0,0]], color: 4 },
+            Z: { shape: [[1,1,0],[0,1,1],[0,0,0]], color: 5 },
+            L: { shape: [[1,0,0],[1,1,1],[0,0,0]], color: 6 },
+            J: { shape: [[0,0,1],[1,1,1],[0,0,0]], color: 7 }
         };
-        const PIECE_NAMES = ['I', 'O', 'T', 'S', 'Z', 'L', 'J'];
+        const PIECE_NAMES = ['I','O','T','S','Z','L','J'];
 
-        // --- Estado do jogo ---
         let grid = [];
         let currentPiece = null;
         let nextPiece = null;
@@ -691,7 +695,6 @@
         let lastDropTime = 0;
         let animFrameId = null;
 
-        // Controles de toque
         let touchTimer = null;
         let touchStartTime = 0;
         let touchStartX = 0;
@@ -700,7 +703,6 @@
         const LONG_TOUCH_MS = 300;
         const SWIPE_THRESHOLD = 15;
 
-        // --- Funções auxiliares ---
         function createGrid() {
             return Array.from({ length: ROWS }, () => Array(COLS).fill(0));
         }
@@ -723,24 +725,14 @@
         function randomPiece() {
             const name = PIECE_NAMES[Math.floor(Math.random() * PIECE_NAMES.length)];
             const data = PIECES[name];
-            return {
-                shape: cloneShape(data.shape),
-                color: data.color,
-                name: name,
-            };
+            return { shape: cloneShape(data.shape), color: data.color, name: name };
         }
 
         function spawnPiece(piece) {
             const shape = piece.shape;
             const cols = shape[0].length;
             const x = Math.floor((COLS - cols) / 2);
-            const y = 0;
-            return {
-                shape: cloneShape(shape),
-                color: piece.color,
-                x: x,
-                y: y,
-            };
+            return { shape: cloneShape(shape), color: piece.color, x: x, y: 0 };
         }
 
         function collides(shape, posX, posY) {
@@ -814,19 +806,14 @@
             drawNext();
         }
 
-        // --- Movimentos ---
         function moveLeft() {
             if (!currentPiece || gameOver) return;
-            if (!collides(currentPiece.shape, currentPiece.x - 1, currentPiece.y)) {
-                currentPiece.x--;
-            }
+            if (!collides(currentPiece.shape, currentPiece.x - 1, currentPiece.y)) currentPiece.x--;
         }
 
         function moveRight() {
             if (!currentPiece || gameOver) return;
-            if (!collides(currentPiece.shape, currentPiece.x + 1, currentPiece.y)) {
-                currentPiece.x++;
-            }
+            if (!collides(currentPiece.shape, currentPiece.x + 1, currentPiece.y)) currentPiece.x++;
         }
 
         function rotatePiece() {
@@ -837,28 +824,14 @@
                 currentPiece.shape = rotated;
                 return;
             }
-            if (!collides(rotated, x - 1, y)) {
-                currentPiece.shape = rotated;
-                currentPiece.x--;
-                return;
-            }
-            if (!collides(rotated, x + 1, y)) {
-                currentPiece.shape = rotated;
-                currentPiece.x++;
-                return;
-            }
-            if (!collides(rotated, x, y - 1)) {
-                currentPiece.shape = rotated;
-                currentPiece.y--;
-                return;
-            }
+            if (!collides(rotated, x - 1, y)) { currentPiece.shape = rotated; currentPiece.x--; return; }
+            if (!collides(rotated, x + 1, y)) { currentPiece.shape = rotated; currentPiece.x++; return; }
+            if (!collides(rotated, x, y - 1)) { currentPiece.shape = rotated; currentPiece.y--; return; }
         }
 
         function hardDrop() {
             if (!currentPiece || gameOver) return;
-            while (!collides(currentPiece.shape, currentPiece.x, currentPiece.y + 1)) {
-                currentPiece.y++;
-            }
+            while (!collides(currentPiece.shape, currentPiece.x, currentPiece.y + 1)) currentPiece.y++;
             lockPiece();
         }
 
@@ -871,28 +844,25 @@
             }
         }
 
-        // --- UI Update ---
         function updateUI() {
             scoreSpan.textContent = score;
             levelSpan.textContent = level;
             linesSpan.textContent = linesCleared;
         }
 
-        // --- Desenho (SIMPLIFICADO E MAIS RÁPIDO) ---
+        // Desenho simplificado
         function drawBlock(context, x, y, colorIndex, size, isNext = false) {
             const color = COLORS[colorIndex];
             context.fillStyle = color;
             context.shadowColor = color;
-            context.shadowBlur = isNext ? 4 : 8;
+            context.shadowBlur = isNext ? 3 : 6;
             context.fillRect(x, y, size, size);
             context.shadowBlur = 0;
-            // Borda simples
             context.strokeStyle = '#ffffff';
-            context.lineWidth = 1;
+            context.lineWidth = 0.8;
             context.strokeRect(x, y, size, size);
-            // Brilho interno sutil
-            context.fillStyle = 'rgba(255,255,255,0.08)';
-            context.fillRect(x + 2, y + 2, size - 4, 3);
+            context.fillStyle = 'rgba(255,255,255,0.06)';
+            context.fillRect(x + 2, y + 2, size - 4, 2);
         }
 
         function drawGrid() {
@@ -900,7 +870,6 @@
             ctx.fillStyle = '#0d0d0d';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Linhas de grade (mais discretas)
             ctx.strokeStyle = 'rgba(255,255,255,0.04)';
             ctx.lineWidth = 0.5;
             for (let r = 0; r <= ROWS; r++) {
@@ -916,16 +885,12 @@
                 ctx.stroke();
             }
 
-            // Peças fixas
             for (let r = 0; r < ROWS; r++) {
                 for (let c = 0; c < COLS; c++) {
-                    if (grid[r][c] !== 0) {
-                        drawBlock(ctx, c * BLOCK_SIZE, r * BLOCK_SIZE, grid[r][c], BLOCK_SIZE);
-                    }
+                    if (grid[r][c] !== 0) drawBlock(ctx, c * BLOCK_SIZE, r * BLOCK_SIZE, grid[r][c], BLOCK_SIZE);
                 }
             }
 
-            // Peça atual
             if (currentPiece && !gameOver) {
                 const { shape, color, x, y } = currentPiece;
                 for (let r = 0; r < shape.length; r++) {
@@ -938,19 +903,18 @@
                     }
                 }
 
-                // Ghost (sombra) mais leve
                 let ghostY = currentPiece.y;
                 while (!collides(currentPiece.shape, currentPiece.x, ghostY + 1)) ghostY++;
                 if (ghostY !== currentPiece.y) {
-                    const { shape, color, x } = currentPiece;
+                    const { shape, x } = currentPiece;
                     for (let r = 0; r < shape.length; r++) {
                         for (let c = 0; c < shape[r].length; c++) {
                             if (shape[r][c] !== 0) {
                                 const px = (x + c) * BLOCK_SIZE;
                                 const py = (ghostY + r) * BLOCK_SIZE;
-                                ctx.fillStyle = 'rgba(255,255,255,0.08)';
+                                ctx.fillStyle = 'rgba(255,255,255,0.06)';
                                 ctx.fillRect(px, py, BLOCK_SIZE, BLOCK_SIZE);
-                                ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+                                ctx.strokeStyle = 'rgba(255,255,255,0.08)';
                                 ctx.lineWidth = 0.5;
                                 ctx.strokeRect(px, py, BLOCK_SIZE, BLOCK_SIZE);
                             }
@@ -974,15 +938,12 @@
             for (let r = 0; r < rows; r++) {
                 for (let c = 0; c < cols; c++) {
                     if (shape[r][c] !== 0) {
-                        const px = offsetX + c * NEXT_SIZE;
-                        const py = offsetY + r * NEXT_SIZE;
-                        drawBlock(nextCtx, px, py, color, NEXT_SIZE, true);
+                        drawBlock(nextCtx, offsetX + c * NEXT_SIZE, offsetY + r * NEXT_SIZE, color, NEXT_SIZE, true);
                     }
                 }
             }
         }
 
-        // --- Loop (com otimização) ---
         function gameLoop(timestamp) {
             if (gameOver) {
                 drawGrid();
@@ -999,7 +960,6 @@
             animFrameId = requestAnimationFrame(gameLoop);
         }
 
-        // --- Inicialização ---
         function initGame() {
             grid = createGrid();
             score = 0;
@@ -1018,39 +978,19 @@
             animFrameId = requestAnimationFrame(gameLoop);
         }
 
-        // --- Teclado ---
+        // ===== Teclado =====
         document.addEventListener('keydown', (e) => {
-            if (gameOver) {
-                if (e.key === 'Enter' || e.key === ' ') initGame();
-                return;
-            }
+            if (gameOver) { if (e.key === 'Enter' || e.key === ' ') initGame(); return; }
             switch (e.key) {
-                case 'ArrowLeft':
-                    e.preventDefault();
-                    moveLeft();
-                    break;
-                case 'ArrowRight':
-                    e.preventDefault();
-                    moveRight();
-                    break;
-                case 'ArrowUp':
-                    e.preventDefault();
-                    rotatePiece();
-                    break;
-                case 'ArrowDown':
-                    e.preventDefault();
-                    moveDown();
-                    break;
-                case ' ':
-                    e.preventDefault();
-                    hardDrop();
-                    break;
+                case 'ArrowLeft': e.preventDefault(); moveLeft(); break;
+                case 'ArrowRight': e.preventDefault(); moveRight(); break;
+                case 'ArrowUp': e.preventDefault(); rotatePiece(); break;
+                case 'ArrowDown': e.preventDefault(); moveDown(); break;
+                case ' ': e.preventDefault(); hardDrop(); break;
             }
         });
 
-        // ============================================================
-        //  4.  CONTROLES DE TOQUE (otimizados)
-        // ============================================================
+        // ===== Toque =====
         canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameOver) return;
@@ -1060,9 +1000,7 @@
             touchMovedHoriz = false;
             touchStartTime = Date.now();
             touchTimer = setTimeout(() => {
-                if (currentPiece && !gameOver && !touchMovedHoriz) {
-                    hardDrop();
-                }
+                if (currentPiece && !gameOver && !touchMovedHoriz) hardDrop();
                 touchTimer = null;
             }, LONG_TOUCH_MS);
         }, { passive: false });
@@ -1077,10 +1015,7 @@
                 if (deltaX > 0) moveRight();
                 else moveLeft();
                 touchStartX = touch.clientX;
-                if (touchTimer) {
-                    clearTimeout(touchTimer);
-                    touchTimer = null;
-                }
+                if (touchTimer) { clearTimeout(touchTimer); touchTimer = null; }
             }
         }, { passive: false });
 
@@ -1090,42 +1025,28 @@
                 clearTimeout(touchTimer);
                 touchTimer = null;
                 const elapsed = Date.now() - touchStartTime;
-                if (elapsed < LONG_TOUCH_MS && !touchMovedHoriz && !gameOver) {
-                    rotatePiece();
-                }
+                if (elapsed < LONG_TOUCH_MS && !touchMovedHoriz && !gameOver) rotatePiece();
             }
         }, { passive: false });
 
         canvas.addEventListener('touchcancel', () => {
-            if (touchTimer) {
-                clearTimeout(touchTimer);
-                touchTimer = null;
-            }
+            if (touchTimer) { clearTimeout(touchTimer); touchTimer = null; }
         }, { passive: false });
 
-        // ============================================================
-        //  5.  BOTÕES DE SETA (com repetição)
-        // ============================================================
+        // ===== Botões =====
         function setupButton(id, action) {
             const btn = document.getElementById(id);
             if (!btn) return;
             let repeatInterval = null;
-
             const startRepeat = (e) => {
                 e.preventDefault();
                 if (gameOver) return;
                 action();
-                repeatInterval = setInterval(() => {
-                    if (!gameOver) action();
-                }, 120);
+                repeatInterval = setInterval(() => { if (!gameOver) action(); }, 120);
             };
             const stopRepeat = () => {
-                if (repeatInterval) {
-                    clearInterval(repeatInterval);
-                    repeatInterval = null;
-                }
+                if (repeatInterval) { clearInterval(repeatInterval); repeatInterval = null; }
             };
-
             btn.addEventListener('mousedown', startRepeat);
             btn.addEventListener('mouseup', stopRepeat);
             btn.addEventListener('mouseleave', stopRepeat);
@@ -1133,22 +1054,14 @@
             btn.addEventListener('touchend', stopRepeat, { passive: false });
             btn.addEventListener('touchcancel', stopRepeat);
         }
-
         setupButton('leftBtn', moveLeft);
         setupButton('rightBtn', moveRight);
 
-        // ============================================================
-        //  6.  REINICIAR
-        // ============================================================
+        // ===== Reiniciar =====
         restartBtn.addEventListener('click', initGame);
-        restartBtn.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            initGame();
-        });
+        restartBtn.addEventListener('touchend', (e) => { e.preventDefault(); initGame(); });
 
-        // ============================================================
-        //  7.  INICIAR VIA TELA DE PRÉ-CARREGAMENTO
-        // ============================================================
+        // ===== Iniciar via preload =====
         startBtn.addEventListener('click', () => {
             preloadScreen.classList.add('hidden');
             initGame();
@@ -1159,16 +1072,12 @@
             initGame();
         });
 
-        // ============================================================
-        //  8.  PREVENIR SCROLL
-        // ============================================================
+        // ===== Prevenir scroll =====
         document.addEventListener('touchmove', (e) => {
             if (e.target.closest('#game-container')) e.preventDefault();
         }, { passive: false });
 
-        // ============================================================
-        //  9.  ESTADO INICIAL (AGUARDA INÍCIO)
-        // ============================================================
+        // ===== Estado inicial =====
         (function drawInitial() {
             grid = createGrid();
             nextPiece = randomPiece();
@@ -1177,7 +1086,7 @@
             updateUI();
         })();
 
-        console.log('🍔 Smash Tetris versão leve para celular!');
+        console.log('🍔 Smash Tetris - logo posicionada abaixo de LINHAS com margem de 5px!');
     </script>
 
 </body>
