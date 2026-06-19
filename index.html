@@ -26,7 +26,7 @@
             touch-action: none;
         }
 
-        /* ===== LUZES NEON DE FUNDO ===== */
+        /* ===== LUZES NEON DE FUNDO (MENOS ELEMENTOS E MAIS LEVES) ===== */
         #background-lights {
             position: fixed;
             top: 0;
@@ -41,8 +41,8 @@
         .neon-light {
             position: absolute;
             border-radius: 50%;
-            opacity: 0.4;
-            filter: blur(20px);
+            opacity: 0.3;
+            filter: blur(15px);
             animation: neonPulse var(--duration) ease-in-out infinite alternate;
             animation-delay: var(--delay);
             width: var(--size);
@@ -50,17 +50,17 @@
             left: var(--x);
             top: var(--y);
             background: var(--color);
-            box-shadow: 0 0 40px var(--color), 0 0 80px var(--color);
+            box-shadow: 0 0 20px var(--color);
         }
 
         @keyframes neonPulse {
             0% {
-                opacity: 0.15;
+                opacity: 0.1;
                 transform: scale(0.8);
             }
             100% {
-                opacity: 0.7;
-                transform: scale(1.3);
+                opacity: 0.4;
+                transform: scale(1.2);
             }
         }
 
@@ -71,11 +71,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
-            padding: 16px 20px 20px;
+            gap: 10px;
+            padding: 14px 16px 16px;
             border: 2px solid #ff00ff;
             border-radius: 20px;
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3), inset 0 0 30px rgba(255, 0, 255, 0.1);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
             background: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(2px);
             max-width: 95vw;
@@ -89,18 +89,18 @@
             width: 100%;
             height: 100%;
             background: rgba(2, 2, 10, 0.92);
-            backdrop-filter: blur(6px);
+            backdrop-filter: blur(4px);
             border-radius: 18px;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             z-index: 20;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
             opacity: 1;
             visibility: visible;
             padding: 20px;
-            gap: 20px;
+            gap: 16px;
         }
 
         #preload-screen.hidden {
@@ -113,81 +113,75 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 24px;
+            gap: 18px;
             max-width: 90%;
         }
 
         #preload-content h1 {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(2.2rem, 8vw, 4rem);
+            font-size: clamp(2rem, 7vw, 3.6rem);
             text-align: center;
             color: #00ffff;
-            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 80px #ff00ff;
+            text-shadow: 0 0 8px #00ffff, 0 0 16px #00ffff;
             animation: titleGlow 2s ease-in-out infinite alternate;
-            letter-spacing: 6px;
+            letter-spacing: 4px;
             line-height: 1.2;
         }
 
         #preload-content .subtitle {
-            font-size: clamp(0.7rem, 2vw, 1rem);
+            font-size: clamp(0.6rem, 1.8vw, 0.9rem);
             color: #ff00ff;
-            letter-spacing: 4px;
-            text-shadow: 0 0 8px #ff00ff;
+            letter-spacing: 3px;
+            text-shadow: 0 0 6px #ff00ff;
             opacity: 0.7;
-            margin-top: -8px;
+            margin-top: -6px;
         }
 
-        /* Loader de barras neon */
+        /* Loader de barras neon (mais leve) */
         #preload-loader {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             justify-content: center;
             align-items: center;
-            height: 40px;
+            height: 30px;
         }
 
         #preload-loader span {
             display: block;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: #ff00ff;
-            box-shadow: 0 0 12px #ff00ff, 0 0 24px #ff00ff;
+            box-shadow: 0 0 8px #ff00ff;
             animation: loaderPulse 1.4s ease-in-out infinite alternate;
         }
 
         #preload-loader span:nth-child(1) {
             animation-delay: 0s;
             background: #ff00ff;
-            box-shadow: 0 0 12px #ff00ff, 0 0 24px #ff00ff;
         }
         #preload-loader span:nth-child(2) {
             animation-delay: 0.2s;
             background: #00ffff;
-            box-shadow: 0 0 12px #00ffff, 0 0 24px #00ffff;
         }
         #preload-loader span:nth-child(3) {
             animation-delay: 0.4s;
             background: #ff00cc;
-            box-shadow: 0 0 12px #ff00cc, 0 0 24px #ff00cc;
         }
         #preload-loader span:nth-child(4) {
             animation-delay: 0.6s;
             background: #00ffaa;
-            box-shadow: 0 0 12px #00ffaa, 0 0 24px #00ffaa;
         }
 
         @keyframes loaderPulse {
             0% {
                 opacity: 0.2;
                 transform: scale(0.6);
-                filter: brightness(0.5);
             }
             100% {
                 opacity: 1;
-                transform: scale(1.3);
-                filter: brightness(1.5);
+                transform: scale(1.2);
             }
         }
 
@@ -195,50 +189,45 @@
         #start-btn {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
-            font-size: clamp(1rem, 3vw, 1.6rem);
-            padding: 14px 40px;
+            font-size: clamp(0.9rem, 2.5vw, 1.4rem);
+            padding: 12px 32px;
             border: 2px solid #00ffff;
             border-radius: 40px;
             background: rgba(0, 255, 255, 0.08);
             color: #00ffff;
-            text-shadow: 0 0 12px #00ffff, 0 0 24px #00ffff;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), inset 0 0 20px rgba(0, 255, 255, 0.05);
+            text-shadow: 0 0 8px #00ffff;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.15);
             cursor: pointer;
-            transition: all 0.25s ease;
-            letter-spacing: 3px;
-            touch-action: none;
-        }
-
-        #start-btn:hover {
-            background: rgba(0, 255, 255, 0.18);
-            box-shadow: 0 0 40px rgba(0, 255, 255, 0.4), inset 0 0 40px rgba(0, 255, 255, 0.1);
-            transform: scale(1.04);
+            transition: all 0.2s ease;
+            letter-spacing: 2px;
+            touch-action: manipulation;
         }
 
         #start-btn:active {
             transform: scale(0.94);
+            background: rgba(0, 255, 255, 0.2);
         }
 
-        /* ===== TÍTULO DO JOGO (dentro do container) ===== */
+        /* ===== TÍTULO DO JOGO ===== */
         #title {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(1.6rem, 6vw, 2.8rem);
-            letter-spacing: 4px;
+            font-size: clamp(1.4rem, 5vw, 2.4rem);
+            letter-spacing: 3px;
             text-align: center;
             color: #00ffff;
-            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 80px #ff00ff;
+            text-shadow: 0 0 8px #00ffff, 0 0 16px #ff00ff;
             animation: titleGlow 2s ease-in-out infinite alternate;
             padding: 0 4px;
         }
 
         @keyframes titleGlow {
             0% {
-                text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 80px #ff00ff;
+                text-shadow: 0 0 8px #00ffff, 0 0 16px #ff00ff;
                 color: #00ffff;
             }
             100% {
-                text-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #ff00ff, 0 0 100px #00ffff;
+                text-shadow: 0 0 12px #ff00ff, 0 0 24px #ff00ff;
                 color: #ff00ff;
             }
         }
@@ -246,7 +235,7 @@
         /* ===== ÁREA DO JOGO ===== */
         #game-area {
             display: flex;
-            gap: 16px;
+            gap: 12px;
             flex-wrap: wrap;
             justify-content: center;
             align-items: flex-start;
@@ -255,15 +244,16 @@
         /* ===== CANVAS PRINCIPAL ===== */
         #gameCanvas {
             width: 100%;
-            max-width: 300px;
+            max-width: 280px;
             height: auto;
             aspect-ratio: 300 / 600;
             border: 2px solid #00ffff;
             border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), inset 0 0 20px rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
             background: #0d0d0d;
             touch-action: none;
             cursor: pointer;
+            image-rendering: pixelated;
         }
 
         /* ===== SIDEBAR ===== */
@@ -271,37 +261,38 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-            min-width: 120px;
+            gap: 8px;
+            min-width: 100px;
         }
 
         #next-label {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: #ff00ff;
             letter-spacing: 2px;
-            text-shadow: 0 0 8px #ff00ff;
+            text-shadow: 0 0 6px #ff00ff;
         }
 
         #nextCanvas {
             width: 100%;
-            max-width: 120px;
+            max-width: 100px;
             height: auto;
             aspect-ratio: 120 / 120;
             border: 2px solid #ff00ff;
             border-radius: 8px;
-            box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.15);
             background: #0d0d0d;
+            image-rendering: pixelated;
         }
 
         #info {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
             width: 100%;
             color: #00ffaa;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             letter-spacing: 1px;
-            text-shadow: 0 0 6px #00ffaa;
+            text-shadow: 0 0 4px #00ffaa;
             text-align: center;
         }
 
@@ -309,100 +300,96 @@
             display: flex;
             justify-content: space-between;
             padding: 2px 4px;
-            border-bottom: 1px solid rgba(0, 255, 170, 0.15);
+            border-bottom: 1px solid rgba(0, 255, 170, 0.1);
         }
 
         #info span {
             color: #ffffff;
             font-weight: 700;
-            text-shadow: 0 0 10px #00ffff;
+            text-shadow: 0 0 6px #00ffff;
         }
 
         /* ===== CONTROLES (BOTÕES SETA) ===== */
         #controls {
             display: flex;
-            gap: 30px;
-            margin-top: 4px;
+            gap: 24px;
+            margin-top: 2px;
         }
 
         .ctrl-btn {
-            width: 64px;
-            height: 64px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             border: 2px solid #00ffff;
             background: rgba(0, 255, 255, 0.08);
             color: #00ffff;
-            font-size: 2rem;
+            font-size: 1.8rem;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            touch-action: none;
-            transition: all 0.15s;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2), inset 0 0 15px rgba(0, 255, 255, 0.05);
-            text-shadow: 0 0 10px #00ffff;
+            touch-action: manipulation;
+            transition: all 0.1s;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+            text-shadow: 0 0 8px #00ffff;
             font-weight: 900;
+            will-change: transform;
         }
 
         .ctrl-btn:active {
             transform: scale(0.92);
-            background: rgba(0, 255, 255, 0.25);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5), inset 0 0 30px rgba(0, 255, 255, 0.15);
+            background: rgba(0, 255, 255, 0.2);
         }
 
         .ctrl-btn#leftBtn {
             border-color: #ff00ff;
             color: #ff00ff;
-            box-shadow: 0 0 15px rgba(255, 0, 255, 0.2), inset 0 0 15px rgba(255, 0, 255, 0.05);
-            text-shadow: 0 0 10px #ff00ff;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.1);
+            text-shadow: 0 0 8px #ff00ff;
         }
         .ctrl-btn#leftBtn:active {
-            background: rgba(255, 0, 255, 0.25);
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+            background: rgba(255, 0, 255, 0.2);
         }
 
         .ctrl-btn#rightBtn {
             border-color: #00ffaa;
             color: #00ffaa;
-            box-shadow: 0 0 15px rgba(0, 255, 170, 0.2), inset 0 0 15px rgba(0, 255, 170, 0.05);
-            text-shadow: 0 0 10px #00ffaa;
+            box-shadow: 0 0 10px rgba(0, 255, 170, 0.1);
+            text-shadow: 0 0 8px #00ffaa;
         }
         .ctrl-btn#rightBtn:active {
-            background: rgba(0, 255, 170, 0.25);
-            box-shadow: 0 0 30px rgba(0, 255, 170, 0.5);
+            background: rgba(0, 255, 170, 0.2);
         }
 
-        /* ===== FAIXA DE LUZES NEON (PAINEL INFERIOR) ===== */
+        /* ===== FAIXA DE LUZES NEON (PAINEL INFERIOR) - MENOS ELEMENTOS ===== */
         #neon-strip {
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 5px;
             width: 100%;
-            padding: 6px 0 2px;
+            padding: 4px 0 0;
             flex-wrap: wrap;
         }
 
         .strip-light {
-            width: 12px;
-            height: 12px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: #ff00ff;
-            box-shadow: 0 0 12px #ff00ff, 0 0 24px #ff00ff;
+            box-shadow: 0 0 8px #ff00ff;
             animation: stripPulse 1.2s ease-in-out infinite alternate;
             animation-delay: var(--delay);
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
         @keyframes stripPulse {
             0% {
                 opacity: 0.2;
                 transform: scale(0.7);
-                filter: brightness(0.6);
             }
             100% {
-                opacity: 1;
-                transform: scale(1.2);
-                filter: brightness(1.4);
+                opacity: 0.9;
+                transform: scale(1.1);
             }
         }
 
@@ -416,8 +403,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 16px;
-            backdrop-filter: blur(4px);
+            gap: 14px;
+            backdrop-filter: blur(3px);
             z-index: 10;
         }
 
@@ -427,74 +414,73 @@
 
         #game-over h2 {
             color: #ff0066;
-            font-size: 2rem;
-            text-shadow: 0 0 20px #ff0066, 0 0 40px #ff0066;
-            letter-spacing: 4px;
+            font-size: 1.8rem;
+            text-shadow: 0 0 16px #ff0066;
+            letter-spacing: 3px;
         }
 
         #game-over p {
             color: #00ffff;
-            font-size: 0.9rem;
-            text-shadow: 0 0 10px #00ffff;
+            font-size: 0.8rem;
+            text-shadow: 0 0 8px #00ffff;
             cursor: pointer;
-            padding: 10px 20px;
+            padding: 8px 18px;
             border: 1px solid #00ffff;
             border-radius: 30px;
             transition: all 0.3s;
         }
-        #game-over p:hover {
-            background: rgba(0, 255, 255, 0.15);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        #game-over p:active {
+            background: rgba(0, 255, 255, 0.2);
         }
 
         /* ===== RESPONSIVO ===== */
         @media (max-width: 480px) {
             #game-container {
-                padding: 10px 12px 16px;
-                gap: 8px;
-            }
-            #game-area {
-                gap: 10px;
-            }
-            #sidebar {
-                min-width: 80px;
+                padding: 8px 10px 12px;
                 gap: 6px;
             }
+            #game-area {
+                gap: 8px;
+            }
+            #sidebar {
+                min-width: 70px;
+                gap: 4px;
+            }
             .ctrl-btn {
-                width: 52px;
-                height: 52px;
-                font-size: 1.6rem;
+                width: 48px;
+                height: 48px;
+                font-size: 1.4rem;
             }
             #controls {
-                gap: 20px;
+                gap: 16px;
             }
             #info {
-                font-size: 0.55rem;
+                font-size: 0.5rem;
             }
             #next-label {
-                font-size: 0.6rem;
+                font-size: 0.5rem;
             }
             .strip-light {
-                width: 8px;
-                height: 8px;
+                width: 6px;
+                height: 6px;
             }
             #neon-strip {
-                gap: 5px;
+                gap: 3px;
             }
             #preload-content h1 {
-                font-size: clamp(1.8rem, 10vw, 2.8rem);
+                font-size: clamp(1.6rem, 8vw, 2.4rem);
             }
             #preload-loader {
-                gap: 8px;
-                height: 30px;
+                gap: 6px;
+                height: 24px;
             }
             #preload-loader span {
-                width: 8px;
-                height: 8px;
+                width: 6px;
+                height: 6px;
             }
             #start-btn {
-                padding: 10px 28px;
-                font-size: 0.9rem;
+                padding: 8px 20px;
+                font-size: 0.8rem;
             }
         }
 
@@ -511,12 +497,12 @@
                 width: 100%;
             }
             #nextCanvas {
-                max-width: 80px;
+                max-width: 70px;
             }
             .ctrl-btn {
-                width: 44px;
-                height: 44px;
-                font-size: 1.3rem;
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -562,7 +548,7 @@
             <button class="ctrl-btn" id="rightBtn">▶</button>
         </div>
 
-        <!-- FAIXA DE LUZES NEON INFERIOR -->
+        <!-- FAIXA DE LUZES NEON INFERIOR (MENOS ELEMENTOS) -->
         <div id="neon-strip"></div>
 
         <!-- Game Over -->
@@ -574,56 +560,55 @@
 
     <script>
         // ============================================================
-        //  1.  LUZES NEON DE FUNDO
+        //  1.  LUZES NEON DE FUNDO (REDUZIDAS)
         // ============================================================
         (function createLights() {
             const container = document.getElementById('background-lights');
             const neonColors = [
                 '#ff00ff', '#00ffff', '#ff00cc', '#00ffaa',
-                '#ff6600', '#9900ff', '#ff0066', '#ffcc00',
-                '#00ffcc', '#ff44aa', '#ff8800', '#aa00ff'
+                '#ff6600', '#9900ff', '#ff0066', '#ffcc00'
             ];
-            const count = 40;
+            const count = 20; // reduzido de 40 para 20
             for (let i = 0; i < count; i++) {
                 const el = document.createElement('div');
                 el.className = 'neon-light';
-                const size = 40 + Math.random() * 140;
+                const size = 30 + Math.random() * 100;
                 const x = Math.random() * 100;
                 const y = Math.random() * 100;
                 const color = neonColors[Math.floor(Math.random() * neonColors.length)];
-                const duration = 3 + Math.random() * 6;
-                const delay = Math.random() * 5;
+                const duration = 4 + Math.random() * 5;
+                const delay = Math.random() * 4;
                 el.style.setProperty('--size', size + 'px');
                 el.style.setProperty('--x', x + '%');
                 el.style.setProperty('--y', y + '%');
                 el.style.setProperty('--color', color);
                 el.style.setProperty('--duration', duration + 's');
                 el.style.setProperty('--delay', delay + 's');
-                el.style.filter = `blur(${20 + Math.random() * 30}px)`;
+                el.style.filter = `blur(${12 + Math.random() * 20}px)`;
                 container.appendChild(el);
             }
         })();
 
         // ============================================================
-        //  2.  FAIXA DE LUZES NEON (PAINEL INFERIOR)
+        //  2.  FAIXA DE LUZES NEON (PAINEL INFERIOR) - REDUZIDA
         // ============================================================
         (function createStrip() {
             const strip = document.getElementById('neon-strip');
             const colors = ['#ff00ff', '#00ffff', '#ff00cc', '#00ffaa', '#ff6600', '#9900ff', '#ff0066', '#ffcc00'];
-            const count = 16;
+            const count = 10; // reduzido de 16 para 10
             for (let i = 0; i < count; i++) {
                 const light = document.createElement('div');
                 light.className = 'strip-light';
                 const color = colors[i % colors.length];
                 light.style.setProperty('--delay', (i * 0.15) + 's');
                 light.style.background = color;
-                light.style.boxShadow = `0 0 12px ${color}, 0 0 24px ${color}`;
+                light.style.boxShadow = `0 0 6px ${color}`;
                 strip.appendChild(light);
             }
         })();
 
         // ============================================================
-        //  3.  TETRIS – LÓGICA COMPLETA
+        //  3.  TETRIS – LÓGICA COMPLETA (OTIMIZADA)
         // ============================================================
 
         // --- Canvas ---
@@ -644,30 +629,14 @@
         // --- Constantes ---
         const COLS = 10;
         const ROWS = 20;
-        const BLOCK_SIZE = 30; // pixels
+        const BLOCK_SIZE = 30;
         const NEXT_SIZE = 30;
 
-        // Cores neon
+        // Cores neon (mais simples)
         const COLORS = [
             null,
-            '#ff00ff', // 1 - I
-            '#00ffff', // 2 - O
-            '#ff00cc', // 3 - T
-            '#00ffaa', // 4 - S
-            '#ff6600', // 5 - Z
-            '#9900ff', // 6 - L
-            '#ff0066', // 7 - J
-        ];
-
-        const GLOW_COLORS = [
-            null,
-            'rgba(255,0,255,0.6)',
-            'rgba(0,255,255,0.6)',
-            'rgba(255,0,204,0.6)',
-            'rgba(0,255,170,0.6)',
-            'rgba(255,102,0,0.6)',
-            'rgba(153,0,255,0.6)',
-            'rgba(255,0,102,0.6)',
+            '#ff00ff', '#00ffff', '#ff00cc', '#00ffaa',
+            '#ff6600', '#9900ff', '#ff0066'
         ];
 
         // --- Definição das peças ---
@@ -708,7 +677,6 @@
                     [0, 0, 0]
                 ], color: 7 },
         };
-
         const PIECE_NAMES = ['I', 'O', 'T', 'S', 'Z', 'L', 'J'];
 
         // --- Estado do jogo ---
@@ -910,43 +878,30 @@
             linesSpan.textContent = linesCleared;
         }
 
-        // --- Desenho ---
+        // --- Desenho (SIMPLIFICADO E MAIS RÁPIDO) ---
         function drawBlock(context, x, y, colorIndex, size, isNext = false) {
             const color = COLORS[colorIndex];
-            const glow = GLOW_COLORS[colorIndex] || 'rgba(255,255,255,0.2)';
-            context.shadowColor = glow;
-            context.shadowBlur = isNext ? 6 : 12;
-            const grad = context.createRadialGradient(
-                x + size * 0.3, y + size * 0.3, 2,
-                x + size / 2, y + size / 2, size * 0.8
-            );
-            grad.addColorStop(0, '#ffffff');
-            grad.addColorStop(0.3, color);
-            grad.addColorStop(1, color);
-            context.fillStyle = grad;
+            context.fillStyle = color;
+            context.shadowColor = color;
+            context.shadowBlur = isNext ? 4 : 8;
             context.fillRect(x, y, size, size);
             context.shadowBlur = 0;
-            context.strokeStyle = color;
-            context.lineWidth = 1.5;
+            // Borda simples
+            context.strokeStyle = '#ffffff';
+            context.lineWidth = 1;
             context.strokeRect(x, y, size, size);
+            // Brilho interno sutil
             context.fillStyle = 'rgba(255,255,255,0.08)';
-            context.fillRect(x + 2, y + 2, size - 4, 4);
-            context.shadowBlur = 0;
-            context.font = `${size * 0.6}px "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif`;
-            context.textAlign = 'center';
-            context.textBaseline = 'middle';
-            context.fillStyle = '#ffffff';
-            context.shadowColor = 'rgba(0,0,0,0.5)';
-            context.shadowBlur = 4;
-            context.fillText('🍔', x + size / 2, y + size / 2 + 1);
-            context.shadowBlur = 0;
+            context.fillRect(x + 2, y + 2, size - 4, 3);
         }
 
         function drawGrid() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#0d0d0d';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+
+            // Linhas de grade (mais discretas)
+            ctx.strokeStyle = 'rgba(255,255,255,0.04)';
             ctx.lineWidth = 0.5;
             for (let r = 0; r <= ROWS; r++) {
                 ctx.beginPath();
@@ -960,6 +915,8 @@
                 ctx.lineTo(c * BLOCK_SIZE, canvas.height);
                 ctx.stroke();
             }
+
+            // Peças fixas
             for (let r = 0; r < ROWS; r++) {
                 for (let c = 0; c < COLS; c++) {
                     if (grid[r][c] !== 0) {
@@ -967,6 +924,8 @@
                     }
                 }
             }
+
+            // Peça atual
             if (currentPiece && !gameOver) {
                 const { shape, color, x, y } = currentPiece;
                 for (let r = 0; r < shape.length; r++) {
@@ -978,8 +937,8 @@
                         }
                     }
                 }
-            }
-            if (currentPiece && !gameOver) {
+
+                // Ghost (sombra) mais leve
                 let ghostY = currentPiece.y;
                 while (!collides(currentPiece.shape, currentPiece.x, ghostY + 1)) ghostY++;
                 if (ghostY !== currentPiece.y) {
@@ -989,14 +948,11 @@
                             if (shape[r][c] !== 0) {
                                 const px = (x + c) * BLOCK_SIZE;
                                 const py = (ghostY + r) * BLOCK_SIZE;
-                                ctx.shadowColor = 'rgba(255,255,255,0.05)';
-                                ctx.shadowBlur = 0;
-                                ctx.fillStyle = 'rgba(255,255,255,0.07)';
+                                ctx.fillStyle = 'rgba(255,255,255,0.08)';
                                 ctx.fillRect(px, py, BLOCK_SIZE, BLOCK_SIZE);
-                                ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+                                ctx.strokeStyle = 'rgba(255,255,255,0.1)';
                                 ctx.lineWidth = 0.5;
                                 ctx.strokeRect(px, py, BLOCK_SIZE, BLOCK_SIZE);
-                                ctx.shadowBlur = 0;
                             }
                         }
                     }
@@ -1026,7 +982,7 @@
             }
         }
 
-        // --- Loop ---
+        // --- Loop (com otimização) ---
         function gameLoop(timestamp) {
             if (gameOver) {
                 drawGrid();
@@ -1093,7 +1049,7 @@
         });
 
         // ============================================================
-        //  4.  CONTROLES DE TOQUE (com arraste horizontal)
+        //  4.  CONTROLES DE TOQUE (otimizados)
         // ============================================================
         canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -1104,7 +1060,6 @@
             touchMovedHoriz = false;
             touchStartTime = Date.now();
             touchTimer = setTimeout(() => {
-                // Toque longo → hard drop
                 if (currentPiece && !gameOver && !touchMovedHoriz) {
                     hardDrop();
                 }
@@ -1117,18 +1072,11 @@
             if (!currentPiece || gameOver) return;
             const touch = e.touches[0];
             const deltaX = touch.clientX - touchStartX;
-            const deltaY = touch.clientY - touchStartY;
-
             if (Math.abs(deltaX) > SWIPE_THRESHOLD && !touchMovedHoriz) {
                 touchMovedHoriz = true;
-                if (deltaX > 0) {
-                    moveRight();
-                } else {
-                    moveLeft();
-                }
-                // Reseta posição para evitar múltiplos movimentos
+                if (deltaX > 0) moveRight();
+                else moveLeft();
                 touchStartX = touch.clientX;
-                // Cancela o timer para não dar hard drop
                 if (touchTimer) {
                     clearTimeout(touchTimer);
                     touchTimer = null;
@@ -1142,14 +1090,13 @@
                 clearTimeout(touchTimer);
                 touchTimer = null;
                 const elapsed = Date.now() - touchStartTime;
-                // Se foi toque curto e sem movimento horizontal significativo → gira
                 if (elapsed < LONG_TOUCH_MS && !touchMovedHoriz && !gameOver) {
                     rotatePiece();
                 }
             }
         }, { passive: false });
 
-        canvas.addEventListener('touchcancel', (e) => {
+        canvas.addEventListener('touchcancel', () => {
             if (touchTimer) {
                 clearTimeout(touchTimer);
                 touchTimer = null;
@@ -1220,11 +1167,8 @@
         }, { passive: false });
 
         // ============================================================
-        //  9.  NÃO INICIA AUTOMATICAMENTE – AGUARDA CLIQUE EM "JOGAR"
+        //  9.  ESTADO INICIAL (AGUARDA INÍCIO)
         // ============================================================
-        // O jogo só inicia após o clique no botão da preload.
-        // Porém, desenhamos um estado inicial vazio.
-        // Para não deixar a tela preta, desenhamos o grid vazio e o próximo.
         (function drawInitial() {
             grid = createGrid();
             nextPiece = randomPiece();
@@ -1233,7 +1177,7 @@
             updateUI();
         })();
 
-        console.log('🍔 Smash Tetris com tela de pré-carregamento neon!');
+        console.log('🍔 Smash Tetris versão leve para celular!');
     </script>
 
 </body>
