@@ -81,7 +81,145 @@
             max-width: 95vw;
         }
 
-        /* ===== TÍTULO ===== */
+        /* ===== PRÉ-CARREGAMENTO (PRELOAD) ===== */
+        #preload-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 2, 10, 0.92);
+            backdrop-filter: blur(6px);
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 20;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+            opacity: 1;
+            visibility: visible;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        #preload-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        #preload-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            max-width: 90%;
+        }
+
+        #preload-content h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2.2rem, 8vw, 4rem);
+            text-align: center;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 80px #ff00ff;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+            letter-spacing: 6px;
+            line-height: 1.2;
+        }
+
+        #preload-content .subtitle {
+            font-size: clamp(0.7rem, 2vw, 1rem);
+            color: #ff00ff;
+            letter-spacing: 4px;
+            text-shadow: 0 0 8px #ff00ff;
+            opacity: 0.7;
+            margin-top: -8px;
+        }
+
+        /* Loader de barras neon */
+        #preload-loader {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+        }
+
+        #preload-loader span {
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ff00ff;
+            box-shadow: 0 0 12px #ff00ff, 0 0 24px #ff00ff;
+            animation: loaderPulse 1.4s ease-in-out infinite alternate;
+        }
+
+        #preload-loader span:nth-child(1) {
+            animation-delay: 0s;
+            background: #ff00ff;
+            box-shadow: 0 0 12px #ff00ff, 0 0 24px #ff00ff;
+        }
+        #preload-loader span:nth-child(2) {
+            animation-delay: 0.2s;
+            background: #00ffff;
+            box-shadow: 0 0 12px #00ffff, 0 0 24px #00ffff;
+        }
+        #preload-loader span:nth-child(3) {
+            animation-delay: 0.4s;
+            background: #ff00cc;
+            box-shadow: 0 0 12px #ff00cc, 0 0 24px #ff00cc;
+        }
+        #preload-loader span:nth-child(4) {
+            animation-delay: 0.6s;
+            background: #00ffaa;
+            box-shadow: 0 0 12px #00ffaa, 0 0 24px #00ffaa;
+        }
+
+        @keyframes loaderPulse {
+            0% {
+                opacity: 0.2;
+                transform: scale(0.6);
+                filter: brightness(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.3);
+                filter: brightness(1.5);
+            }
+        }
+
+        /* Botão JOGAR */
+        #start-btn {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1rem, 3vw, 1.6rem);
+            padding: 14px 40px;
+            border: 2px solid #00ffff;
+            border-radius: 40px;
+            background: rgba(0, 255, 255, 0.08);
+            color: #00ffff;
+            text-shadow: 0 0 12px #00ffff, 0 0 24px #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), inset 0 0 20px rgba(0, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 3px;
+            touch-action: none;
+        }
+
+        #start-btn:hover {
+            background: rgba(0, 255, 255, 0.18);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.4), inset 0 0 40px rgba(0, 255, 255, 0.1);
+            transform: scale(1.04);
+        }
+
+        #start-btn:active {
+            transform: scale(0.94);
+        }
+
+        /* ===== TÍTULO DO JOGO (dentro do container) ===== */
         #title {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
@@ -343,6 +481,21 @@
             #neon-strip {
                 gap: 5px;
             }
+            #preload-content h1 {
+                font-size: clamp(1.8rem, 10vw, 2.8rem);
+            }
+            #preload-loader {
+                gap: 8px;
+                height: 30px;
+            }
+            #preload-loader span {
+                width: 8px;
+                height: 8px;
+            }
+            #start-btn {
+                padding: 10px 28px;
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 380px) {
@@ -375,6 +528,18 @@
 
     <!-- ===== CONTAINER PRINCIPAL ===== -->
     <div id="game-container">
+
+        <!-- TELA DE PRÉ-CARREGAMENTO -->
+        <div id="preload-screen">
+            <div id="preload-content">
+                <h1>SMASH TETRIS</h1>
+                <div class="subtitle">✦ NEON EDITION ✦</div>
+                <div id="preload-loader">
+                    <span></span><span></span><span></span><span></span>
+                </div>
+                <button id="start-btn">▶ JOGAR ◀</button>
+            </div>
+        </div>
 
         <div id="title">SMASH TETRIS</div>
 
@@ -473,6 +638,8 @@
         const linesSpan = document.getElementById('lines');
         const gameOverDiv = document.getElementById('game-over');
         const restartBtn = document.getElementById('restartBtn');
+        const preloadScreen = document.getElementById('preload-screen');
+        const startBtn = document.getElementById('start-btn');
 
         // --- Constantes ---
         const COLS = 10;
@@ -1033,9 +1200,17 @@
         });
 
         // ============================================================
-        //  7.  INICIAR
+        //  7.  INICIAR VIA TELA DE PRÉ-CARREGAMENTO
         // ============================================================
-        initGame();
+        startBtn.addEventListener('click', () => {
+            preloadScreen.classList.add('hidden');
+            initGame();
+        });
+        startBtn.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            preloadScreen.classList.add('hidden');
+            initGame();
+        });
 
         // ============================================================
         //  8.  PREVENIR SCROLL
@@ -1044,7 +1219,21 @@
             if (e.target.closest('#game-container')) e.preventDefault();
         }, { passive: false });
 
-        console.log('🍔 Smash Tetris com arraste lateral e luzes neon!');
+        // ============================================================
+        //  9.  NÃO INICIA AUTOMATICAMENTE – AGUARDA CLIQUE EM "JOGAR"
+        // ============================================================
+        // O jogo só inicia após o clique no botão da preload.
+        // Porém, desenhamos um estado inicial vazio.
+        // Para não deixar a tela preta, desenhamos o grid vazio e o próximo.
+        (function drawInitial() {
+            grid = createGrid();
+            nextPiece = randomPiece();
+            drawGrid();
+            drawNext();
+            updateUI();
+        })();
+
+        console.log('🍔 Smash Tetris com tela de pré-carregamento neon!');
     </script>
 
 </body>
