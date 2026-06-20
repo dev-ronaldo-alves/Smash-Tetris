@@ -574,7 +574,7 @@
                     <img src="logo-transparente.png" alt="Logo">
                 </div>
                 <!-- IFOOD -->
-                <a id="ifood-link" href="https://www.ifood.com.br/delivery/maringa-pr/smash-it-hamburgueria-zona-04/e3e950c2-2edc-46a7-9907-2c78989cc446?UTM_Medium=share" target="_blank" rel="noopener noreferrer">
+                <a id="ifood-link" href="ifood://restaurant/e3e950c2-2edc-46a7-9907-2c78989cc446" data-fallback="https://www.ifood.com.br/delivery/maringa-pr/smash-it-hamburgueria-zona-04/e3e950c2-2edc-46a7-9907-2c78989cc446?UTM_Medium=share" target="_blank" rel="noopener noreferrer">
                     <img id="ifood-icon" src="https://logodownload.org/wp-content/uploads/2017/05/ifood-logo-0.png" alt="iFood">
                     <span id="ifood-text">Pedir no iFood</span>
                 </a>
@@ -603,6 +603,18 @@
     </div>
 
     <script>
+        // Lógica para tentar abrir o App do iFood diretamente
+        document.getElementById('ifood-link').addEventListener('click', function(e) {
+            const fallbackUrl = this.getAttribute('data-fallback');
+            const appUrl = this.getAttribute('href');
+            
+            // Tenta abrir o app
+            setTimeout(function() {
+                // Se ainda estiver na página após 2 segundos, redireciona para o navegador
+                window.location.href = fallbackUrl;
+            }, 2000);
+        });
+
         // ============================================================
         //  1.  LUZES NEON DE FUNDO (LEVES)
         // ============================================================
