@@ -295,7 +295,7 @@
             text-shadow: 0 0 4px #00ffff;
         }
 
-        /* ===== LOGO E ANOTA AI ===== */
+        /* ===== LOGO ===== */
         #logo-placeholder {
             margin-top: 5px;
             width: clamp(54px, 14.4vw, 86.4px);
@@ -311,36 +311,6 @@
             height: 200%;
             object-fit: contain;
             display: block;
-        }
-
-        #anotai-link {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            gap: 4px;
-            margin-top: 8px;
-            transition: transform 0.2s;
-        }
-        
-        #anotai-link:active {
-            transform: scale(0.9);
-        }
-
-        #anotai-icon {
-            width: clamp(40px, 10vw, 60px);
-            height: clamp(40px, 10vw, 60px);
-            border-radius: 8px;
-            filter: drop-shadow(0 0 5px #00ffaa);
-        }
-
-        #anotai-text {
-            color: #00ffaa;
-            font-size: clamp(0.5rem, 1.4vw, 0.75rem);
-            font-weight: 900;
-            text-shadow: 0 0 3px rgba(0, 255, 170, 0.5);
-            text-transform: uppercase;
-            text-align: center;
         }
 
         /* ===== CONTROLES (BOTÕES) ===== */
@@ -575,14 +545,6 @@
                 <div id="logo-placeholder">
                     <img src="logo-transparente.png" alt="Logo">
                 </div>
-                <!-- ANOTA AI -->
-                <a id="anotai-link" href="https://pedido.anota.ai/loja/smash-it-hamburgueria-1?f=ms" target="_blank" rel="noopener noreferrer">
-                    <svg id="anotai-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="100" height="100" rx="20" fill="#00ffaa"/>
-                        <path d="M30 70 L50 30 L70 70 M40 55 L60 55" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span id="anotai-text">Pedir no Cardápio</span>
-                </a>
             </div>
         </div>
 
@@ -1094,7 +1056,7 @@
             updateUI();
         })();
 
-        console.log('🍔 Smash Tetris - Anota AI & Controles prontos!');
+        console.log('🍔 Smash Tetris - Limpo e funcional!');
     </script>
 
 </body>
