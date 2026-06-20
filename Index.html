@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Smash Tetris</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+            overflow: hidden;
+            touch-action: none;
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        /* ===== LUZES NEON DE FUNDO (LEVES) ===== */
+        #background-lights {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .neon-light {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.25;
+            filter: blur(12px);
+            animation: neonPulse var(--duration) ease-in-out infinite alternate;
+            animation-delay: var(--delay);
+            width: var(--size);
+            height: var(--size);
+            left: var(--x);
+            top: var(--y);
+            background: var(--color);
+            box-shadow: 0 0 15px var(--color);
+        }
+
+        @keyframes neonPulse {
+            0% {
+                opacity: 0.08;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 0.35;
+                transform: scale(1.2);
+            }
+        }
+
+        /* ===== CONTAINER DO JOGO ===== */
+        #game-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(6px, 2.16vh, 14px);
+            padding: clamp(12px, 2.88vh, 24px);
+            border: 2px solid #ff00ff;
+            border-radius: 16px;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
+            background: rgba(10, 10, 10, 0.88);
+            backdrop-filter: blur(2px);
+            max-width: 98vw;
+            max-height: 98vh;
+            width: fit-content;
+            height: fit-content;
+        }
+
+        /* ===== PRÉ-CARREGAMENTO ===== */
+        #preload-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 2, 10, 0.92);
+            backdrop-filter: blur(3px);
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 20;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            opacity: 1;
+            visibility: visible;
+            padding: 16px;
+            gap: 12px;
+        }
+
+        #preload-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        #preload-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            max-width: 90%;
+        }
+
+        #preload-content h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2.16rem, 8.4vw, 4.32rem);
+            text-align: center;
+            color: #00ffff;
+            text-shadow: 0 0 8px #00ffff, 0 0 16px #00ffff;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+            letter-spacing: 3px;
+            line-height: 1.1;
+        }
+
+        #preload-content .subtitle {
+            font-size: clamp(0.72rem, 2.16vw, 1.2rem);
+            color: #ff00ff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 6px #ff00ff;
+            opacity: 0.7;
+            margin-top: -4px;
+        }
+
+        #preload-loader {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            height: 28px;
+        }
+
+        #preload-loader span {
+            display: block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff00ff;
+            box-shadow: 0 0 6px #ff00ff;
+            animation: loaderPulse 1.4s ease-in-out infinite alternate;
+        }
+
+        #preload-loader span:nth-child(1) { animation-delay: 0s; background: #ff00ff; }
+        #preload-loader span:nth-child(2) { animation-delay: 0.2s; background: #00ffff; }
+        #preload-loader span:nth-child(3) { animation-delay: 0.4s; background: #ff00cc; }
+        #preload-loader span:nth-child(4) { animation-delay: 0.6s; background: #00ffaa; }
+
+        @keyframes loaderPulse {
+            0% { opacity: 0.2; transform: scale(0.6); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        #start-btn {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.08rem, 3.12vw, 1.68rem);
+            padding: 12px 32px;
+            border: 2px solid #00ffff;
+            border-radius: 40px;
+            background: rgba(0, 255, 255, 0.08);
+            color: #00ffff;
+            text-shadow: 0 0 8px #00ffff;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.12);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            letter-spacing: 2px;
+            touch-action: manipulation;
+        }
+
+        #start-btn:active {
+            transform: scale(0.94);
+            background: rgba(0, 255, 255, 0.2);
+        }
+
+        /* ===== TÍTULO ===== */
+        #title {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: clamp(1.68rem, 6vw, 2.88rem);
+            letter-spacing: 2px;
+            text-align: center;
+            color: #00ffff;
+            text-shadow: 0 0 6px #00ffff, 0 0 12px #ff00ff;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+            padding: 0 2px;
+            line-height: 1.2;
+        }
+
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 6px #00ffff, 0 0 12px #ff00ff; color: #00ffff; }
+            100% { text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; color: #ff00ff; }
+        }
+
+        /* ===== ÁREA DO JOGO (FLEX COMPACTO) ===== */
+        #game-area {
+            display: flex;
+            gap: clamp(9.6px, 2.4vw, 21.6px);
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        /* ===== CANVAS PRINCIPAL ===== */
+        #gameCanvas {
+            width: clamp(216px, 54vw, 374px);
+            height: auto;
+            aspect-ratio: 300 / 600;
+            border: 2px solid #00ffff;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.15);
+            background: #0d0d0d;
+            touch-action: none;
+            cursor: pointer;
+            image-rendering: pixelated;
+            flex-shrink: 0;
+        }
+
+        /* ===== SIDEBAR ===== */
+        #sidebar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(4.8px, 1.44vh, 12px);
+            min-width: clamp(84px, 21.6vw, 144px);
+            flex-shrink: 1;
+        }
+
+        #next-label {
+            font-size: clamp(0.6rem, 1.8vw, 0.9rem);
+            color: #ff00ff;
+            letter-spacing: 1px;
+            text-shadow: 0 0 4px #ff00ff;
+            white-space: nowrap;
+        }
+
+        #nextCanvas {
+            width: 100%;
+            max-width: clamp(84px, 21.6vw, 144px);
+            height: auto;
+            aspect-ratio: 120 / 120;
+            border: 2px solid #ff00ff;
+            border-radius: 6px;
+            box-shadow: 0 0 8px rgba(255, 0, 255, 0.12);
+            background: #0d0d0d;
+            image-rendering: pixelated;
+        }
+
+        #info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            width: 100%;
+            color: #00ffaa;
+            font-size: clamp(0.6rem, 1.68vw, 0.9rem);
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 4px #00ffaa;
+            text-align: center;
+        }
+
+        #info div {
+            display: flex;
+            justify-content: space-between;
+            padding: 1px 3px;
+            border-bottom: 1px solid rgba(0, 255, 170, 0.08);
+        }
+
+        #info span {
+            color: #ffffff;
+            font-weight: 700;
+            text-shadow: 0 0 4px #00ffff;
+        }
+
+        /* ===== LOGO E IFOOD ===== */
+        #logo-placeholder {
+            margin-top: 5px;
+            width: clamp(54px, 14.4vw, 86.4px);
+            height: auto;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #logo-placeholder img {
+            width: 200%;
+            height: 200%;
+            object-fit: contain;
+            display: block;
+        }
+
+        #ifood-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            gap: 4px;
+            margin-top: 8px;
+            transition: transform 0.2s;
+        }
+        
+        #ifood-link:active {
+            transform: scale(0.9);
+        }
+
+        #ifood-icon {
+            width: clamp(40px, 10vw, 60px);
+            height: auto;
+            filter: drop-shadow(0 0 5px #ea1d2c);
+        }
+
+        #ifood-text {
+            color: #ea1d2c;
+            font-size: clamp(0.5rem, 1.4vw, 0.75rem);
+            font-weight: 900;
+            text-shadow: 0 0 3px rgba(234, 29, 44, 0.5);
+            text-transform: uppercase;
+        }
+
+        /* ===== CONTROLES (BOTÕES) ===== */
+        #controls-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        #controls-main {
+            display: flex;
+            gap: clamp(16.8px, 6vw, 40.8px);
+        }
+
+        #controls-secondary {
+            display: flex;
+            gap: 20px;
+        }
+
+        .ctrl-btn {
+            width: clamp(57.6px, 14.4vw, 80.4px);
+            height: clamp(57.6px, 14.4vw, 80.4px);
+            border-radius: 50%;
+            border: 2px solid #00ffff;
+            background: rgba(0, 255, 255, 0.08);
+            color: #00ffff;
+            font-size: clamp(1.68rem, 4.8vw, 2.64rem);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: all 0.08s;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.08);
+            text-shadow: 0 0 6px #00ffff;
+            font-weight: 900;
+            will-change: transform;
+            flex-shrink: 0;
+        }
+
+        .ctrl-btn:active {
+            transform: scale(0.90);
+            background: rgba(0, 255, 255, 0.2);
+        }
+
+        .ctrl-btn#leftBtn {
+            border-color: #ff00ff;
+            color: #ff00ff;
+            box-shadow: 0 0 8px rgba(255, 0, 255, 0.08);
+            text-shadow: 0 0 6px #ff00ff;
+        }
+        .ctrl-btn#leftBtn:active {
+            background: rgba(255, 0, 255, 0.2);
+        }
+
+        .ctrl-btn#rightBtn {
+            border-color: #00ffaa;
+            color: #00ffaa;
+            box-shadow: 0 0 8px rgba(0, 255, 170, 0.08);
+            text-shadow: 0 0 6px #00ffaa;
+        }
+        .ctrl-btn#rightBtn:active {
+            background: rgba(0, 255, 170, 0.2);
+        }
+
+        .ctrl-btn#rotateBtn {
+            border-color: #ffcc00;
+            color: #ffcc00;
+            box-shadow: 0 0 8px rgba(255, 204, 0, 0.08);
+            text-shadow: 0 0 6px #ffcc00;
+        }
+        .ctrl-btn#rotateBtn:active {
+            background: rgba(255, 204, 0, 0.2);
+        }
+
+        .ctrl-btn#downBtn {
+            border-color: #ff6600;
+            color: #ff6600;
+            box-shadow: 0 0 8px rgba(255, 102, 0, 0.08);
+            text-shadow: 0 0 6px #ff6600;
+        }
+        .ctrl-btn#downBtn:active {
+            background: rgba(255, 102, 0, 0.2);
+        }
+
+        /* ===== FAIXA DE LUZES NEON ===== */
+        #neon-strip {
+            display: flex;
+            justify-content: center;
+            gap: clamp(4.8px, 1.44vw, 9.6px);
+            width: 100%;
+            padding: 4px 0 0;
+            flex-wrap: wrap;
+        }
+
+        .strip-light {
+            width: clamp(7.2px, 2.16vw, 12px);
+            height: clamp(7.2px, 2.16vw, 12px);
+            border-radius: 50%;
+            background: #ff00ff;
+            box-shadow: 0 0 6px #ff00ff;
+            animation: stripPulse 1.2s ease-in-out infinite alternate;
+            animation-delay: var(--delay);
+            opacity: 0.4;
+        }
+
+        @keyframes stripPulse {
+            0% { opacity: 0.15; transform: scale(0.7); }
+            100% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        /* ===== GAME OVER ===== */
+        #game-over {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 14px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(3px);
+            z-index: 10;
+        }
+
+        #game-over.show {
+            display: flex;
+        }
+
+        #game-over h2 {
+            color: #ff0066;
+            font-size: clamp(1.92rem, 7.2vw, 2.88rem);
+            text-shadow: 0 0 12px #ff0066;
+            letter-spacing: 2px;
+        }
+
+        #game-over p {
+            color: #00ffff;
+            font-size: clamp(0.96rem, 2.88vw, 1.32rem);
+            text-shadow: 0 0 6px #00ffff;
+            cursor: pointer;
+            padding: 8px 20px;
+            border: 1px solid #00ffff;
+            border-radius: 30px;
+            transition: all 0.2s;
+        }
+        #game-over p:active {
+            background: rgba(0, 255, 255, 0.2);
+        }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 400px) {
+            #game-container {
+                padding: 7.2px 9.6px 12px;
+                gap: 4.8px;
+                border-radius: 12px;
+            }
+            #game-area {
+                gap: 4.8px;
+            }
+            #sidebar {
+                min-width: 66px;
+            }
+            #nextCanvas {
+                max-width: 66px;
+            }
+            #info {
+                font-size: 0.54rem;
+            }
+            .ctrl-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.32rem;
+            }
+            #controls-main {
+                gap: 14.4px;
+            }
+            #controls-secondary {
+                gap: 10px;
+            }
+            #title {
+                font-size: 1.32rem;
+            }
+            #preload-content h1 {
+                font-size: 1.92rem;
+            }
+            #start-btn {
+                padding: 7.2px 19.2px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== LUZES NEON DE FUNDO ===== -->
+    <div id="background-lights"></div>
+
+    <!-- ===== CONTAINER PRINCIPAL ===== -->
+    <div id="game-container">
+
+        <!-- TELA DE PRÉ-CARREGAMENTO -->
+        <div id="preload-screen">
+            <div id="preload-content">
+                <h1>SMASH TETRIS</h1>
+                <div class="subtitle">✦ NEON EDITION ✦</div>
+                <div id="preload-loader">
+                    <span></span><span></span><span></span><span></span>
+                </div>
+                <button id="start-btn">▶ JOGAR ◀</button>
+            </div>
+        </div>
+
+        <div id="title">SMASH TETRIS</div>
+
+        <div id="game-area">
+            <canvas id="gameCanvas" width="300" height="600"></canvas>
+
+            <div id="sidebar">
+                <div id="next-label">▶ PRÓXIMA ◀</div>
+                <canvas id="nextCanvas" width="120" height="120"></canvas>
+                <div id="info">
+                    <div>PONTOS <span id="score">0</span></div>
+                    <div>NÍVEL <span id="level">1</span></div>
+                    <div>LINHAS <span id="lines">0</span></div>
+                </div>
+                <!-- LOGO -->
+                <div id="logo-placeholder">
+                    <img src="logo-transparente.png" alt="Logo">
+                </div>
+                <!-- IFOOD -->
+                <a id="ifood-link" href="https://www.ifood.com.br/delivery/maringa-pr/smash-it-hamburgueria-zona-04/e3e950c2-2edc-46a7-9907-2c78989cc446?UTM_Medium=share" target="_blank">
+                    <img id="ifood-icon" src="https://logodownload.org/wp-content/uploads/2017/05/ifood-logo-0.png" alt="iFood">
+                    <span id="ifood-text">Pedir no iFood</span>
+                </a>
+            </div>
+        </div>
+
+        <div id="controls-wrapper">
+            <div id="controls-main">
+                <button class="ctrl-btn" id="leftBtn">◀</button>
+                <button class="ctrl-btn" id="rightBtn">▶</button>
+            </div>
+            <div id="controls-secondary">
+                <button class="ctrl-btn" id="rotateBtn">↻</button>
+                <button class="ctrl-btn" id="downBtn">▼</button>
+            </div>
+        </div>
+
+        <!-- FAIXA DE LUZES NEON INFERIOR -->
+        <div id="neon-strip"></div>
+
+        <!-- Game Over -->
+        <div id="game-over">
+            <h2>GAME OVER</h2>
+            <p id="restartBtn">▶ REINICIAR ◀</p>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  1.  LUZES NEON DE FUNDO (LEVES)
+        // ============================================================
+        (function createLights() {
+            const container = document.getElementById('background-lights');
+            const neonColors = ['#ff00ff','#00ffff','#ff00cc','#00ffaa','#ff6600','#9900ff','#ff0066','#ffcc00'];
+            const count = 15;
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('div');
+                el.className = 'neon-light';
+                const size = 20 + Math.random() * 80;
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const color = neonColors[Math.floor(Math.random() * neonColors.length)];
+                const duration = 4 + Math.random() * 5;
+                const delay = Math.random() * 4;
+                el.style.setProperty('--size', size + 'px');
+                el.style.setProperty('--x', x + '%');
+                el.style.setProperty('--y', y + '%');
+                el.style.setProperty('--color', color);
+                el.style.setProperty('--duration', duration + 's');
+                el.style.setProperty('--delay', delay + 's');
+                el.style.filter = `blur(${10 + Math.random() * 15}px)`;
+                container.appendChild(el);
+            }
+        })();
+
+        // ============================================================
+        //  2.  FAIXA DE LUZES NEON (PAINEL INFERIOR)
+        // ============================================================
+        (function createStrip() {
+            const strip = document.getElementById('neon-strip');
+            const colors = ['#ff00ff','#00ffff','#ff00cc','#00ffaa','#ff6600','#9900ff','#ff0066','#ffcc00'];
+            const count = 8;
+            for (let i = 0; i < count; i++) {
+                const light = document.createElement('div');
+                light.className = 'strip-light';
+                const color = colors[i % colors.length];
+                light.style.setProperty('--delay', (i * 0.15) + 's');
+                light.style.background = color;
+                light.style.boxShadow = `0 0 5px ${color}`;
+                strip.appendChild(light);
+            }
+        })();
+
+        // ============================================================
+        //  3.  TETRIS – LÓGICA COMPLETA
+        // ============================================================
+
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const nextCanvas = document.getElementById('nextCanvas');
+        const nextCtx = nextCanvas.getContext('2d');
+
+        const scoreSpan = document.getElementById('score');
+        const levelSpan = document.getElementById('level');
+        const linesSpan = document.getElementById('lines');
+        const gameOverDiv = document.getElementById('game-over');
+        const restartBtn = document.getElementById('restartBtn');
+        const preloadScreen = document.getElementById('preload-screen');
+        const startBtn = document.getElementById('start-btn');
+
+        const COLS = 10;
+        const ROWS = 20;
+        const BLOCK_SIZE = 30;
+        const NEXT_SIZE = 30;
+
+        const COLORS = [null, '#ff00ff','#00ffff','#ff00cc','#00ffaa','#ff6600','#9900ff','#ff0066'];
+
+        const PIECES = {
+            I: { shape: [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], color: 1 },
+            O: { shape: [[1,1],[1,1]], color: 2 },
+            T: { shape: [[0,1,0],[1,1,1],[0,0,0]], color: 3 },
+            S: { shape: [[0,1,1],[1,1,0],[0,0,0]], color: 4 },
+            Z: { shape: [[1,1,0],[0,1,1],[0,0,0]], color: 5 },
+            L: { shape: [[1,0,0],[1,1,1],[0,0,0]], color: 6 },
+            J: { shape: [[0,0,1],[1,1,1],[0,0,0]], color: 7 }
+        };
+        const PIECE_NAMES = ['I','O','T','S','Z','L','J'];
+
+        let grid = [];
+        let currentPiece = null;
+        let nextPiece = null;
+        let score = 0;
+        let level = 1;
+        let linesCleared = 0;
+        let gameOver = false;
+        let dropInterval = 1000;
+        let lastDropTime = 0;
+        let animFrameId = null;
+
+        let touchTimer = null;
+        let touchStartTime = 0;
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchMovedHoriz = false;
+        const LONG_TOUCH_MS = 300;
+        const SWIPE_THRESHOLD = 15;
+
+        function createGrid() {
+            return Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+        }
+
+        function cloneShape(shape) {
+            return shape.map(row => [...row]);
+        }
+
+        function rotateShape(shape) {
+            const n = shape.length;
+            const rotated = Array.from({ length: n }, () => Array(n).fill(0));
+            for (let r = 0; r < n; r++) {
+                for (let c = 0; c < n; c++) {
+                    rotated[c][n - 1 - r] = shape[r][c];
+                }
+            }
+            return rotated;
+        }
+
+        function randomPiece() {
+            const name = PIECE_NAMES[Math.floor(Math.random() * PIECE_NAMES.length)];
+            const data = PIECES[name];
+            return { shape: cloneShape(data.shape), color: data.color, name: name };
+        }
+
+        function spawnPiece(piece) {
+            const shape = piece.shape;
+            const cols = shape[0].length;
+            const x = Math.floor((COLS - cols) / 2);
+            return { shape: cloneShape(shape), color: piece.color, x: x, y: 0 };
+        }
+
+        function collides(shape, posX, posY) {
+            for (let r = 0; r < shape.length; r++) {
+                for (let c = 0; c < shape[r].length; c++) {
+                    if (shape[r][c] !== 0) {
+                        const gridX = posX + c;
+                        const gridY = posY + r;
+                        if (gridX < 0 || gridX >= COLS || gridY >= ROWS) return true;
+                        if (gridY >= 0 && grid[gridY][gridX] !== 0) return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        function lockPiece() {
+            if (!currentPiece) return;
+            const { shape, color, x, y } = currentPiece;
+            for (let r = 0; r < shape.length; r++) {
+                for (let c = 0; c < shape[r].length; c++) {
+                    if (shape[r][c] !== 0) {
+                        const gridX = x + c;
+                        const gridY = y + r;
+                        if (gridY >= 0 && gridY < ROWS && gridX >= 0 && gridX < COLS) {
+                            grid[gridY][gridX] = color;
+                        }
+                    }
+                }
+            }
+            clearLines();
+            if (!gameOver) spawnNewPiece();
+        }
+
+        function clearLines() {
+            let cleared = 0;
+            for (let row = ROWS - 1; row >= 0; ) {
+                if (grid[row].every(cell => cell !== 0)) {
+                    grid.splice(row, 1);
+                    grid.unshift(Array(COLS).fill(0));
+                    cleared++;
+                } else {
+                    row--;
+                }
+            }
+            if (cleared > 0) {
+                const points = [0, 100, 300, 500, 800];
+                const addScore = (points[cleared] || 0) * level;
+                score += addScore;
+                linesCleared += cleared;
+                const newLevel = Math.floor(linesCleared / 10) + 1;
+                if (newLevel > level) {
+                    level = newLevel;
+                    dropInterval = Math.max(100, 1000 - (level - 1) * 80);
+                }
+                updateUI();
+            }
+        }
+
+        function spawnNewPiece() {
+            if (nextPiece === null) nextPiece = randomPiece();
+            const newPiece = spawnPiece(nextPiece);
+            currentPiece = newPiece;
+            nextPiece = randomPiece();
+            if (collides(currentPiece.shape, currentPiece.x, currentPiece.y)) {
+                gameOver = true;
+                gameOverDiv.classList.add('show');
+                currentPiece = null;
+                return;
+            }
+            drawNext();
+        }
+
+        function moveLeft() {
+            if (!currentPiece || gameOver) return;
+            if (!collides(currentPiece.shape, currentPiece.x - 1, currentPiece.y)) currentPiece.x--;
+        }
+
+        function moveRight() {
+            if (!currentPiece || gameOver) return;
+            if (!collides(currentPiece.shape, currentPiece.x + 1, currentPiece.y)) currentPiece.x++;
+        }
+
+        function rotatePiece() {
+            if (!currentPiece || gameOver) return;
+            const rotated = rotateShape(currentPiece.shape);
+            const { x, y } = currentPiece;
+            if (!collides(rotated, x, y)) {
+                currentPiece.shape = rotated;
+                return;
+            }
+            if (!collides(rotated, x - 1, y)) { currentPiece.shape = rotated; currentPiece.x--; return; }
+            if (!collides(rotated, x + 1, y)) { currentPiece.shape = rotated; currentPiece.x++; return; }
+            if (!collides(rotated, x, y - 1)) { currentPiece.shape = rotated; currentPiece.y--; return; }
+        }
+
+        function hardDrop() {
+            if (!currentPiece || gameOver) return;
+            while (!collides(currentPiece.shape, currentPiece.x, currentPiece.y + 1)) currentPiece.y++;
+            lockPiece();
+        }
+
+        function moveDown() {
+            if (!currentPiece || gameOver) return;
+            if (!collides(currentPiece.shape, currentPiece.x, currentPiece.y + 1)) {
+                currentPiece.y++;
+                lastDropTime = performance.now();
+            } else {
+                lockPiece();
+            }
+        }
+
+        function updateUI() {
+            scoreSpan.textContent = score;
+            levelSpan.textContent = level;
+            linesSpan.textContent = linesCleared;
+        }
+
+        function drawBlock(context, x, y, colorIndex, size, isNext = false) {
+            const color = COLORS[colorIndex];
+            context.fillStyle = color;
+            context.shadowColor = color;
+            context.shadowBlur = isNext ? 3 : 6;
+            context.fillRect(x, y, size, size);
+            context.shadowBlur = 0;
+            context.strokeStyle = '#ffffff';
+            context.lineWidth = 0.8;
+            context.strokeRect(x, y, size, size);
+            context.fillStyle = 'rgba(255,255,255,0.06)';
+            context.fillRect(x + 2, y + 2, size - 4, 2);
+        }
+
+        function drawGrid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0d0d0d';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+            ctx.lineWidth = 0.5;
+            for (let r = 0; r <= ROWS; r++) {
+                ctx.beginPath();
+                ctx.moveTo(0, r * BLOCK_SIZE);
+                ctx.lineTo(canvas.width, r * BLOCK_SIZE);
+                ctx.stroke();
+            }
+            for (let c = 0; c <= COLS; c++) {
+                ctx.beginPath();
+                ctx.moveTo(c * BLOCK_SIZE, 0);
+                ctx.lineTo(c * BLOCK_SIZE, canvas.height);
+                ctx.stroke();
+            }
+
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    if (grid[r][c] !== 0) drawBlock(ctx, c * BLOCK_SIZE, r * BLOCK_SIZE, grid[r][c], BLOCK_SIZE);
+                }
+            }
+
+            if (currentPiece && !gameOver) {
+                const { shape, color, x, y } = currentPiece;
+                for (let r = 0; r < shape.length; r++) {
+                    for (let c = 0; c < shape[r].length; c++) {
+                        if (shape[r][c] !== 0) {
+                            const px = (x + c) * BLOCK_SIZE;
+                            const py = (y + r) * BLOCK_SIZE;
+                            drawBlock(ctx, px, py, color, BLOCK_SIZE);
+                        }
+                    }
+                }
+
+                let ghostY = currentPiece.y;
+                while (!collides(currentPiece.shape, currentPiece.x, ghostY + 1)) ghostY++;
+                if (ghostY !== currentPiece.y) {
+                    const { shape, x } = currentPiece;
+                    for (let r = 0; r < shape.length; r++) {
+                        for (let c = 0; c < shape[r].length; c++) {
+                            if (shape[r][c] !== 0) {
+                                const px = (x + c) * BLOCK_SIZE;
+                                const py = (ghostY + r) * BLOCK_SIZE;
+                                ctx.fillStyle = 'rgba(255,255,255,0.06)';
+                                ctx.fillRect(px, py, BLOCK_SIZE, BLOCK_SIZE);
+                                ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+                                ctx.lineWidth = 0.5;
+                                ctx.strokeRect(px, py, BLOCK_SIZE, BLOCK_SIZE);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function drawNext() {
+            nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+            nextCtx.fillStyle = '#0d0d0d';
+            nextCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
+            if (!nextPiece) return;
+            const shape = nextPiece.shape;
+            const color = nextPiece.color;
+            const rows = shape.length;
+            const cols = shape[0].length;
+            const offsetX = (nextCanvas.width - cols * NEXT_SIZE) / 2;
+            const offsetY = (nextCanvas.height - rows * NEXT_SIZE) / 2;
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    if (shape[r][c] !== 0) {
+                        drawBlock(nextCtx, offsetX + c * NEXT_SIZE, offsetY + r * NEXT_SIZE, color, NEXT_SIZE, true);
+                    }
+                }
+            }
+        }
+
+        function gameLoop(timestamp) {
+            if (gameOver) {
+                drawGrid();
+                animFrameId = requestAnimationFrame(gameLoop);
+                return;
+            }
+            if (!lastDropTime) lastDropTime = timestamp;
+            if (timestamp - lastDropTime >= dropInterval) {
+                if (currentPiece) moveDown();
+                lastDropTime = timestamp;
+            }
+            drawGrid();
+            updateUI();
+            animFrameId = requestAnimationFrame(gameLoop);
+        }
+
+        function initGame() {
+            grid = createGrid();
+            score = 0;
+            level = 1;
+            linesCleared = 0;
+            dropInterval = 1000;
+            gameOver = false;
+            lastDropTime = 0;
+            gameOverDiv.classList.remove('show');
+            nextPiece = randomPiece();
+            spawnNewPiece();
+            updateUI();
+            drawNext();
+            drawGrid();
+            if (animFrameId) cancelAnimationFrame(animFrameId);
+            animFrameId = requestAnimationFrame(gameLoop);
+        }
+
+        // ===== Teclado =====
+        document.addEventListener('keydown', (e) => {
+            if (gameOver) { if (e.key === 'Enter' || e.key === ' ') initGame(); return; }
+            switch (e.key) {
+                case 'ArrowLeft': e.preventDefault(); moveLeft(); break;
+                case 'ArrowRight': e.preventDefault(); moveRight(); break;
+                case 'ArrowUp': e.preventDefault(); rotatePiece(); break;
+                case 'ArrowDown': e.preventDefault(); moveDown(); break;
+                case ' ': e.preventDefault(); hardDrop(); break;
+            }
+        });
+
+        // ===== Toque no Canvas =====
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            if (gameOver) return;
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            touchMovedHoriz = false;
+            touchStartTime = Date.now();
+            touchTimer = setTimeout(() => {
+                if (currentPiece && !gameOver && !touchMovedHoriz) hardDrop();
+                touchTimer = null;
+            }, LONG_TOUCH_MS);
+        }, { passive: false });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            if (!currentPiece || gameOver) return;
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - touchStartX;
+            if (Math.abs(deltaX) > SWIPE_THRESHOLD && !touchMovedHoriz) {
+                touchMovedHoriz = true;
+                if (deltaX > 0) moveRight();
+                else moveLeft();
+                touchStartX = touch.clientX;
+                if (touchTimer) { clearTimeout(touchTimer); touchTimer = null; }
+            }
+        }, { passive: false });
+
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            if (touchTimer) {
+                clearTimeout(touchTimer);
+                touchTimer = null;
+                const elapsed = Date.now() - touchStartTime;
+                if (elapsed < LONG_TOUCH_MS && !touchMovedHoriz && !gameOver) rotatePiece();
+            }
+        }, { passive: false });
+
+        // ===== Botões de Controle =====
+        function setupButton(id, action, repeat = true) {
+            const btn = document.getElementById(id);
+            if (!btn) return;
+            let repeatInterval = null;
+            
+            const startAction = (e) => {
+                e.preventDefault();
+                if (gameOver) return;
+                action();
+                if (repeat) {
+                    repeatInterval = setInterval(() => { if (!gameOver) action(); }, 120);
+                }
+            };
+            
+            const stopAction = () => {
+                if (repeatInterval) { clearInterval(repeatInterval); repeatInterval = null; }
+            };
+            
+            btn.addEventListener('mousedown', startAction);
+            btn.addEventListener('mouseup', stopAction);
+            btn.addEventListener('mouseleave', stopAction);
+            btn.addEventListener('touchstart', startAction, { passive: false });
+            btn.addEventListener('touchend', stopAction, { passive: false });
+            btn.addEventListener('touchcancel', stopAction);
+        }
+        
+        setupButton('leftBtn', moveLeft);
+        setupButton('rightBtn', moveRight);
+        setupButton('rotateBtn', rotatePiece, false); // Rotação geralmente não repete
+        setupButton('downBtn', moveDown);
+
+        // ===== Reiniciar =====
+        restartBtn.addEventListener('click', initGame);
+        restartBtn.addEventListener('touchend', (e) => { e.preventDefault(); initGame(); });
+
+        // ===== Iniciar via preload =====
+        startBtn.addEventListener('click', () => {
+            preloadScreen.classList.add('hidden');
+            initGame();
+        });
+        startBtn.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            preloadScreen.classList.add('hidden');
+            initGame();
+        });
+
+        // ===== Prevenir scroll =====
+        document.addEventListener('touchmove', (e) => {
+            if (e.target.closest('#game-container')) e.preventDefault();
+        }, { passive: false });
+
+        // ===== Estado inicial =====
+        (function drawInitial() {
+            grid = createGrid();
+            nextPiece = randomPiece();
+            drawGrid();
+            drawNext();
+            updateUI();
+        })();
+
+        console.log('🍔 Smash Tetris - iFood & Controles adicionados!');
+    </script>
+
+</body>
+</html>
