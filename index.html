@@ -295,7 +295,7 @@
             text-shadow: 0 0 4px #00ffff;
         }
 
-        /* ===== LOGO E IFOOD ===== */
+        /* ===== LOGO E ANOTA AI ===== */
         #logo-placeholder {
             margin-top: 5px;
             width: clamp(54px, 14.4vw, 86.4px);
@@ -313,7 +313,7 @@
             display: block;
         }
 
-        #ifood-link {
+        #anotai-link {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -323,22 +323,24 @@
             transition: transform 0.2s;
         }
         
-        #ifood-link:active {
+        #anotai-link:active {
             transform: scale(0.9);
         }
 
-        #ifood-icon {
+        #anotai-icon {
             width: clamp(40px, 10vw, 60px);
-            height: auto;
-            filter: drop-shadow(0 0 5px #ea1d2c);
+            height: clamp(40px, 10vw, 60px);
+            border-radius: 8px;
+            filter: drop-shadow(0 0 5px #00ffaa);
         }
 
-        #ifood-text {
-            color: #ea1d2c;
+        #anotai-text {
+            color: #00ffaa;
             font-size: clamp(0.5rem, 1.4vw, 0.75rem);
             font-weight: 900;
-            text-shadow: 0 0 3px rgba(234, 29, 44, 0.5);
+            text-shadow: 0 0 3px rgba(0, 255, 170, 0.5);
             text-transform: uppercase;
+            text-align: center;
         }
 
         /* ===== CONTROLES (BOTÕES) ===== */
@@ -573,10 +575,13 @@
                 <div id="logo-placeholder">
                     <img src="logo-transparente.png" alt="Logo">
                 </div>
-                <!-- IFOOD -->
-                <a id="ifood-link" href="ifood://restaurant/e3e950c2-2edc-46a7-9907-2c78989cc446" data-fallback="https://www.ifood.com.br/delivery/maringa-pr/smash-it-hamburgueria-zona-04/e3e950c2-2edc-46a7-9907-2c78989cc446?UTM_Medium=share" target="_blank" rel="noopener noreferrer">
-                    <img id="ifood-icon" src="https://logodownload.org/wp-content/uploads/2017/05/ifood-logo-0.png" alt="iFood">
-                    <span id="ifood-text">Pedir no iFood</span>
+                <!-- ANOTA AI -->
+                <a id="anotai-link" href="https://pedido.anota.ai/loja/smash-it-hamburgueria-1?f=ms" target="_blank" rel="noopener noreferrer">
+                    <svg id="anotai-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="100" height="100" rx="20" fill="#00ffaa"/>
+                        <path d="M30 70 L50 30 L70 70 M40 55 L60 55" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span id="anotai-text">Pedir no Cardápio</span>
                 </a>
             </div>
         </div>
@@ -603,18 +608,6 @@
     </div>
 
     <script>
-        // Lógica para tentar abrir o App do iFood diretamente
-        document.getElementById('ifood-link').addEventListener('click', function(e) {
-            const fallbackUrl = this.getAttribute('data-fallback');
-            const appUrl = this.getAttribute('href');
-            
-            // Tenta abrir o app
-            setTimeout(function() {
-                // Se ainda estiver na página após 2 segundos, redireciona para o navegador
-                window.location.href = fallbackUrl;
-            }, 2000);
-        });
-
         // ============================================================
         //  1.  LUZES NEON DE FUNDO (LEVES)
         // ============================================================
@@ -1069,7 +1062,7 @@
         
         setupButton('leftBtn', moveLeft);
         setupButton('rightBtn', moveRight);
-        setupButton('rotateBtn', rotatePiece, false); // Rotação geralmente não repete
+        setupButton('rotateBtn', rotatePiece, false);
         setupButton('downBtn', moveDown);
 
         // ===== Reiniciar =====
@@ -1101,7 +1094,7 @@
             updateUI();
         })();
 
-        console.log('🍔 Smash Tetris - iFood & Controles adicionados!');
+        console.log('🍔 Smash Tetris - Anota AI & Controles prontos!');
     </script>
 
 </body>
